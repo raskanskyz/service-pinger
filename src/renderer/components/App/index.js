@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Tabs } from "antd";
+const { TabPane } = Tabs;
 
 import { establishConnectionAction } from "../../redux/actions";
 import {
@@ -24,14 +26,26 @@ export default () => {
         };
     }, []);
 
+    const callback = key => {
+        console.log(key);
+    };
+
     return (
         <div>
-            <div>
-                mp prod version: {mpProdVersion}, status: {`${mpProdStatus}`}
-            </div>
-            <div>
-                od prod version: {odProdVersion}, status: {`${odProdStatus}`}
-            </div>
+            <Tabs defaultActiveKey="1" onChange={callback}>
+                <TabPane tab="Prod" key="1">
+                    <div>
+                        mp prod version: {mpProdVersion}, status: {`${mpProdStatus}`}
+                    </div>
+                    <div>
+                        od prod version: {odProdVersion}, status: {`${odProdStatus}`}
+                    </div>
+                </TabPane>
+                <TabPane tab="Stage" key="2">
+                    Content of Tab Pane 2
+                </TabPane>
+            </Tabs>
+            ,
         </div>
     );
 };
