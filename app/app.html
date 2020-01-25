@@ -8,15 +8,6 @@
     <body>
         <div id="root"></div>
         <script src="http://localhost:3000/socket.io/socket.io.js"></script>
-        <script>
-            const socket = io("http://localhost:3000");
-            socket.on("[prod] mp-client", msg => {
-                console.log("TCL: msg", msg);
-            });
-            socket.on("[prod] org", msg => {
-                console.log("TCL: msg", msg);
-            });
-        </script>
         <script src="./dist/renderer.js"></script>
     </body>
 </html>
