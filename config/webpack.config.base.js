@@ -1,22 +1,23 @@
-const webpack = require('webpack');
-const { dependencies } = require('../package.json');
+const webpack = require("webpack");
+const path = require("path");
+const { dependencies } = require("../package.json");
 
 module.exports = {
-  externals: [...Object.keys(dependencies || {})],
+    externals: [...Object.keys(dependencies || {})],
 
-  output: {
-    libraryTarget: 'commonjs2',
-  },
+    output: {
+        libraryTarget: "commonjs2"
+    },
 
-  resolve: {
-    extensions: ['.js', '.jsx', '.json'],
-  },
+    resolve: {
+        extensions: [".js", ".jsx", ".json"]
+    },
 
-  plugins: [
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'production',
-    }),
+    plugins: [
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: "development"
+        }),
 
-    new webpack.NamedModulesPlugin(),
-  ],
+        new webpack.NamedModulesPlugin()
+    ]
 };
