@@ -1,4 +1,4 @@
-import { SET_MP_PROD_LISTEN, SET_OD_PROD_LISTEN } from "../actionTypes";
+import { SET_MP_PROD_LISTEN, SET_OD_PROD_LISTEN, SET_MP_PROD_RESPONSE, SET_OD_PROD_RESPONSE } from "../actionTypes";
 
 const initialStruct = {
     status: null,
@@ -32,6 +32,10 @@ export default (state = initialState, action) => {
                 }
             };
         }
+        case SET_MP_PROD_RESPONSE:
+            return { ...state, mp: { ...state.mp, ...action.payload } };
+        case SET_OD_PROD_RESPONSE:
+            return { ...state, od: { ...state.od, ...action.payload } };
         default:
             return state;
     }

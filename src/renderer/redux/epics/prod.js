@@ -1,48 +1,87 @@
 import { ofType } from "redux-observable";
 import io from "socket.io-client";
-import { withLatestFrom } from "rxjs/operators";
+import { fromEvent } from "rxjs";
+import { withLatestFrom, map, ignoreElements, mergeMap, tap, switchMap } from "rxjs/operators";
 
-import { TOGGLE_MP_PROD_LISTEN, TOGGLE_OD_PROD_LISTEN, SET_MP_PROD_LISTEN, SET_OD_PROD_LISTEN } from "../actionTypes";
-import { setMPProdListenAction, toggleMPProdListenAction } from "../actions";
+import {
+    TOGGLE_MP_PROD_LISTEN,
+    TOGGLE_OD_PROD_LISTEN,
+    SET_MP_PROD_LISTEN,
+    SET_OD_PROD_LISTEN,
+    ESTABLISH_CONNECTION,
+    CLOSE_CONNECTION
+} from "../actionTypes";
+import {
+    setMPProdListenAction,
+    setODProdListenAction,
+    setMPProdResponseAction,
+    setODProdResponseAction
+} from "../actions";
+import { isMPListeningSelector, isODListeningSelector } from "../selectors/prod";
 
-const socket = io("http://localhost:3000");
+let socket;
+const establishConnection = action$ => {
+    return action$.pipe(
+        ofType(ESTABLISH_CONNECTION),
+        tap(() => console.log("before connect")),
+        switchMap(() => {
+            socket = io("http://localhost:3000");
 
-const toggleMPProdListen = (action$, store) =>
-    action$.pipe(
+            return fromEvent(socket, "connect");
+        }),
+        tap(() => console.log("after connect")),
+        mergeMap(() => [setMPProdListenAction(true), setODProdListenAction(true)])
+    );
+};
+
+const closeConnection = action$ => {
+    return action$.pipe(
+        ofType(CLOSE_CONNECTION),
+        tap(() => console.log("CLOSE CONNECTION")),
+        switchMap(() => fromEvent(connection, "disconnect")),
+        ignoreElements()
+    );
+};
+
+const toggleMPProdListen = (action$, state$) => {
+    return action$.pipe(
         ofType(TOGGLE_MP_PROD_LISTEN),
-        withLatestFrom(store.getState()),
+        withLatestFrom(state$),
+        map((_, state) => isMPListeningSelector(state)),
         map(prevIsListening => setMPProdListenAction(!prevIsListening))
     );
+};
 
-const toggleODProdListen = action$ =>
+const toggleODProdListen = (action$, state$) =>
     action$.pipe(
         ofType(TOGGLE_OD_PROD_LISTEN),
-        withLatestFrom(/**current value in store */),
-        map(prevIsListening => toggleMPProdListenAction(!prevIsListening))
+        withLatestFrom(state$),
+        map((_, state) => isODListeningSelector(state)),
+        map(prevIsListening => setODProdListenAction(!prevIsListening))
     );
 
 const setMPProdListen = action$ =>
     action$.pipe(
         ofType(SET_MP_PROD_LISTEN),
-        withLatestFrom(/**current value in store */),
-        tap(() => {
-            socket.on("[prod] mp-client", msg => {
-                console.log("TCL: msg", msg);
-            });
-        }),
-        mapTo({ type: "PONG" })
+        tap(() => console.log("before mp")),
+        switchMap(() => fromEvent(socket, "[prod] mp-client")),
+        tap(() => console.log("after mp")),
+        map(setMPProdResponseAction)
     );
 
 const setODProdListen = action$ =>
     action$.pipe(
         ofType(SET_OD_PROD_LISTEN),
-        withLatestFrom(/**current value in store */),
-        tap(() => {
-            socket.on("[prod] mp-client", msg => {
-                console.log("TCL: msg", msg);
-            });
-        }),
-        mapTo({ type: "PONG" })
+        switchMap(() => fromEvent(socket, "[prod] org")),
+        tap(console.log),
+        map(setODProdResponseAction)
     );
 
-export default [setMPProdListen, setODProdListen, listenProdStartEpic, toggleODProdListen];
+export default [
+    establishConnection,
+    closeConnection,
+    toggleMPProdListen,
+    setMPProdListen,
+    setODProdListen,
+    toggleODProdListen
+];
