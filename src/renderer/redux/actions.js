@@ -3,7 +3,9 @@ import {
     SET_OD_PROD_LISTEN,
     ESTABLISH_CONNECTION,
     SET_OD_PROD_RESPONSE,
-    SET_MP_PROD_RESPONSE
+    SET_MP_PROD_RESPONSE,
+    TOGGLE_MP_PROD_LISTEN,
+    TOGGLE_OD_PROD_LISTEN
 } from "./actionTypes";
 
 export const establishConnectionAction = () => {

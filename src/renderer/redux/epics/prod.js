@@ -47,7 +47,7 @@ const toggleMPProdListen = (action$, state$) => {
     return action$.pipe(
         ofType(TOGGLE_MP_PROD_LISTEN),
         withLatestFrom(state$),
-        map((_, state) => isMPListeningSelector(state)),
+        map(([, state]) => isMPListeningSelector(state)),
         map(prevIsListening => setMPProdListenAction(!prevIsListening))
     );
 };
@@ -56,16 +56,14 @@ const toggleODProdListen = (action$, state$) =>
     action$.pipe(
         ofType(TOGGLE_OD_PROD_LISTEN),
         withLatestFrom(state$),
-        map((_, state) => isODListeningSelector(state)),
+        map(([, state]) => isODListeningSelector(state)),
         map(prevIsListening => setODProdListenAction(!prevIsListening))
     );
 
 const setMPProdListen = action$ =>
     action$.pipe(
         ofType(SET_MP_PROD_LISTEN),
-        tap(() => console.log("before mp")),
         switchMap(() => fromEvent(socket, "[prod] mp-client")),
-        tap(() => console.log("after mp")),
         map(setMPProdResponseAction)
     );
 
