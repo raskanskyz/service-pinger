@@ -1,4 +1,4 @@
-import { SET_MP_PROD_LISTEN, SET_OD_PROD_LISTEN } from '../actionTypes';
+import { START_MP_PROD_LISTEN, START_OD_PROD_LISTEN } from '../actionTypes';
 
 const initialStruct = {
   status: null,
@@ -14,7 +14,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    // case SET_MP_PROD_LISTEN: {
+    // case START_MP_PROD_LISTEN: {
     //     return {
     //         ...state,
     //         mp: {

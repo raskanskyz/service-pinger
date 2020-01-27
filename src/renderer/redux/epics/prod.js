@@ -2,77 +2,85 @@ import { ofType } from 'redux-observable';
 import io from 'socket.io-client';
 import { fromEvent } from 'rxjs';
 import {
-  withLatestFrom, map, ignoreElements, mergeMap, tap, switchMap,
+  withLatestFrom, filter, switchMap, take, map, tap, ignoreElements,
 } from 'rxjs/operators';
 
 import {
-  TOGGLE_MP_PROD_LISTEN,
-  TOGGLE_OD_PROD_LISTEN,
-  SET_MP_PROD_LISTEN,
-  SET_OD_PROD_LISTEN,
-  ESTABLISH_CONNECTION,
-  CLOSE_CONNECTION,
+  START_MP_PROD_LISTEN, START_OD_PROD_LISTEN, ESTABLISH_CONNECTION, CLOSE_CONNECTION, SET_MP_PROD_RESPONSE,
 } from '../actionTypes';
+import { notifyMPProdChangesSelector, mpProdStatusSelector } from '../selectors/prod';
 import {
-  setMPProdListenAction,
-  setODProdListenAction,
-  setMPProdResponseAction,
-  setODProdResponseAction,
+  startMPProdListenAction, startODProdListenAction, setMPProdResponseAction, setODProdResponseAction,
 } from '../actions';
-import { isMPListeningSelector, isODListeningSelector } from '../selectors/prod';
 
 let socket;
 const establishConnection = action$ => action$.pipe(
   ofType(ESTABLISH_CONNECTION),
-  tap(() => console.log('before connect')),
   switchMap(() => {
-    socket = io('http://localhost:3000');
-
+    socket = io('http://localhost:3000', { transports: ['websocket'] });
     return fromEvent(socket, 'connect');
   }),
-  tap(() => console.log('after connect')),
-  mergeMap(() => [setMPProdListenAction(true), setODProdListenAction(true)]),
+  switchMap(() => [startMPProdListenAction(), startODProdListenAction()]),
 );
 
 const closeConnection = action$ => action$.pipe(
   ofType(CLOSE_CONNECTION),
-  tap(() => console.log('CLOSE CONNECTION')),
-  switchMap(() => fromEvent(connection, 'disconnect')),
+  switchMap(() => fromEvent(socket, 'disconnect')),
+);
+
+const startMPProdListen = action$ => action$.pipe(
+  ofType(START_MP_PROD_LISTEN),
+  switchMap(() => fromEvent(socket, '[prod] mp-client')),
+  map(message => setMPProdResponseAction(message)),
+);
+
+const startODProdListen = action$ => action$.pipe(
+  ofType(START_OD_PROD_LISTEN),
+  switchMap(() => fromEvent(socket, '[prod] org')),
+  map(message => setODProdResponseAction(message)),
+);
+
+const setMPProdResponse = (action$, state$) => action$.pipe(
+  ofType(SET_MP_PROD_RESPONSE),
+  withLatestFrom(state$),
+  map(([action, state]) => [action.payload.status, notifyMPProdChangesSelector(state), mpProdStatusSelector(state)]),
+  filter(([currentServiceStatus, notifyChanges, prevServiceStatus]) => notifyChanges && prevServiceStatus !== currentServiceStatus),
+  tap(([currentServiceStatus]) => {
+    const title = currentServiceStatus ? 'Marketplace Is Back Up!' : 'Marketplace Is Down';
+    const myNotification = new Notification(title, {
+      body: 'Lorem Ipsum Dolor Sit Amet',
+    });
+
+    // myNotification.onclick = () => {
+    //   console.log('Notification clicked');
+    // };
+  }),
   ignoreElements(),
 );
 
-const toggleMPProdListen = (action$, state$) => action$.pipe(
-  ofType(TOGGLE_MP_PROD_LISTEN),
+const setODProdResponse = (action$, state$) => action$.pipe(
+  ofType(SET_MP_PROD_RESPONSE),
   withLatestFrom(state$),
-  map(([, state]) => isMPListeningSelector(state)),
-  map(prevIsListening => setMPProdListenAction(!prevIsListening)),
-);
+  map(([action, state]) => [action.payload.status, notifyMPProdChangesSelector(state), mpProdStatusSelector(state)]),
+  filter(([currentServiceStatus, notifyChanges, prevServiceStatus]) => {
+    console.log('RapidLogs: prevServiceStatus', prevServiceStatus);
+    console.log('RapidLogs: currentServiceStatus', currentServiceStatus);
+    console.log('RapidLogs: notifyChanges', notifyChanges);
+    return notifyChanges && prevServiceStatus !== currentServiceStatus;
+  }),
+  tap(([currentServiceStatus]) => {
+    const title = currentServiceStatus ? 'Organization Dashboard Is Back Up!' : 'Organization Dashboard Is Down';
+    const myNotification = new Notification(title, {
+      body: 'Lorem Ipsum Dolor Sit Amet',
+    });
 
-const toggleODProdListen = (action$, state$) => action$.pipe(
-  ofType(TOGGLE_OD_PROD_LISTEN),
-  withLatestFrom(state$),
-  map(([, state]) => isODListeningSelector(state)),
-  map(prevIsListening => setODProdListenAction(!prevIsListening)),
-);
-
-const setMPProdListen = action$ => action$.pipe(
-  ofType(SET_MP_PROD_LISTEN),
-  switchMap(() => fromEvent(socket, '[prod] mp-client')),
-  map(setMPProdResponseAction),
-);
-
-const setODProdListen = action$ => action$.pipe(
-  ofType(SET_OD_PROD_LISTEN),
-  switchMap(() => fromEvent(socket, '[prod] org')),
-  tap(console.log),
-  map(setODProdResponseAction),
+    // myNotification.onclick = () => {
+    //   console.log('Notification clicked');
+    // };
+  }),
+  ignoreElements(),
 );
 
 export default [
-  establishConnection,
-  closeConnection,
-  toggleMPProdListen,
-  setMPProdListen,
-  setODProdListen,
-  toggleODProdListen,
+  establishConnection, closeConnection, startMPProdListen, startODProdListen, setMPProdResponse, setODProdResponse,
 ];

@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Tabs, List, Switch } from 'antd';
+import {
+  Tabs, List, Switch, Badge,
+} from 'antd';
 
 import {
   establishConnectionAction,
   closeConnectionAction,
-  toggleMPProdListenAction,
-  toggleODProdListenAction,
+  notifyMPProdChangesAction,
+  notifyODProdChangesAction,
 } from '../../redux/actions';
 import {
   mpProdStatusSelector,
   odProdStatusSelector,
   mpProdVersionSelector,
   odProdVersionSelector,
-  isMPListeningSelector,
-  isODListeningSelector,
+  notifyMPProdChangesSelector,
+  notifyODProdChangesSelector,
 } from '../../redux/selectors/prod';
 
 const { TabPane } = Tabs;
@@ -26,18 +28,19 @@ export default () => {
   const odProdStatus = useSelector(odProdStatusSelector);
   const mpProdVersion = useSelector(mpProdVersionSelector);
   const odProdVersion = useSelector(odProdVersionSelector);
-  const isMPListening = useSelector(isMPListeningSelector);
-  const isODListening = useSelector(isODListeningSelector);
+  const notifyMPProdChanges = useSelector(notifyMPProdChangesSelector);
+  const notifyODProdChanges = useSelector(notifyODProdChangesSelector);
 
   useEffect(() => {
     dispatch(establishConnectionAction());
+
     return () => {
       dispatch(closeConnectionAction());
     };
   }, []);
 
   const callback = (key) => {
-    console.log(key);
+    console.log('RapidLogs: callback -> key', key);
   };
 
   const data = [
@@ -46,24 +49,34 @@ export default () => {
       title: 'Marketplace',
       version: mpProdVersion,
       status: mpProdStatus,
-      isListening: isMPListening,
+      notifyChanges: notifyMPProdChanges,
     },
     {
       key: 'org',
       title: 'Organization Dashboard',
       version: odProdVersion,
       status: odProdStatus,
-      isListening: isODListening,
+      notifyChanges: notifyODProdChanges,
     },
   ];
 
-  const onChange = (item) => {
+  const onChange = (checked, item) => {
     const actionMapper = {
-      'mp-client': toggleMPProdListenAction,
-      org: toggleODProdListenAction,
+      'mp-client': () => notifyMPProdChangesAction(checked),
+      org: () => notifyODProdChangesAction(checked),
     };
 
     return dispatch(actionMapper[item.key]());
+  };
+
+  const badgeRenderer = (status) => {
+    const statusMapper = {
+      true: { status: 'success' },
+      false: { status: 'error' },
+      null: { status: 'processing', color: '#faad14' },
+    };
+
+    return <Badge {...statusMapper[status]} />;
   };
 
   return (
@@ -74,10 +87,18 @@ export default () => {
             itemLayout="horizontal"
             dataSource={data}
             renderItem={item => (
-              <List.Item>
-                <List.Item.Meta title={item.title} description={item.version} />
+              <List.Item style={{ paddingLeft: '16px', paddingRight: '16px' }}>
+                <List.Item.Meta
+                  title={(
+                    <span>
+                      {badgeRenderer(item.status)}
+                      {item.title}
+                    </span>
+)}
+                  description={item.version}
+                />
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Switch checked={item.isListening} size="small" onChange={() => onChange(item)} />
+                  <Switch checked={item.notifyChanges} size="small" onChange={e => onChange(e, item)} />
                 </div>
               </List.Item>
             )}

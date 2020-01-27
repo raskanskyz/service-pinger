@@ -1,11 +1,11 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
 const baseSelector = state => state.prod;
 const baseMPSelector = createSelector(baseSelector, prod => prod.mp);
 const baseODSelector = createSelector(baseSelector, prod => prod.od);
 
-export const isMPListeningSelector = createSelector(baseMPSelector, mp => mp.isListening);
-export const isODListeningSelector = createSelector(baseODSelector, od => od.isListening);
+export const notifyMPProdChangesSelector = createSelector(baseMPSelector, mp => mp.notifyChanges);
+export const notifyODProdChangesSelector = createSelector(baseODSelector, od => od.notifyChanges);
 
 export const mpProdStatusSelector = createSelector(baseMPSelector, mp => mp.status);
 export const odProdStatusSelector = createSelector(baseODSelector, od => od.status);

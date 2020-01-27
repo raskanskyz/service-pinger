@@ -1,63 +1,46 @@
 import {
-    SET_MP_PROD_LISTEN,
-    SET_OD_PROD_LISTEN,
-    ESTABLISH_CONNECTION,
-    SET_OD_PROD_RESPONSE,
-    SET_MP_PROD_RESPONSE,
-    TOGGLE_MP_PROD_LISTEN,
-    TOGGLE_OD_PROD_LISTEN
-} from "./actionTypes";
+  START_MP_PROD_LISTEN,
+  START_OD_PROD_LISTEN,
+  ESTABLISH_CONNECTION,
+  SET_OD_PROD_RESPONSE,
+  SET_MP_PROD_RESPONSE,
+  CLOSE_CONNECTION,
+  NOTIFY_MP_PROD_CHANGES,
+  NOTIFY_OD_PROD_CHANGES,
+} from './actionTypes';
 
-export const establishConnectionAction = () => {
-    return {
-        type: ESTABLISH_CONNECTION
-    };
-};
+export const establishConnectionAction = () => ({
+  type: ESTABLISH_CONNECTION,
+});
 
-export const closeConnectionAction = () => {
-    return {
-        type: CLOSE_CONNECTION
-    };
-};
+export const closeConnectionAction = () => ({
+  type: CLOSE_CONNECTION,
+});
 
-export const setMPProdListenAction = payload => {
-    return {
-        type: SET_MP_PROD_LISTEN,
-        payload
-    };
-};
+export const startMPProdListenAction = () => ({
+  type: START_MP_PROD_LISTEN,
+});
 
-export const setODProdListenAction = payload => {
-    return {
-        type: SET_OD_PROD_LISTEN,
-        payload
-    };
-};
+export const startODProdListenAction = () => ({
+  type: START_OD_PROD_LISTEN,
+});
 
-export const toggleMPProdListenAction = payload => {
-    return {
-        type: TOGGLE_MP_PROD_LISTEN,
-        payload
-    };
-};
+export const setODProdResponseAction = payload => ({
+  type: SET_OD_PROD_RESPONSE,
+  payload,
+});
 
-export const toggleODProdListenAction = payload => {
-    return {
-        type: TOGGLE_OD_PROD_LISTEN,
-        payload
-    };
-};
+export const setMPProdResponseAction = payload => ({
+  type: SET_MP_PROD_RESPONSE,
+  payload,
+});
 
-export const setODProdResponseAction = payload => {
-    return {
-        type: SET_OD_PROD_RESPONSE,
-        payload
-    };
-};
+export const notifyMPProdChangesAction = payload => ({
+  type: NOTIFY_MP_PROD_CHANGES,
+  payload,
+});
 
-export const setMPProdResponseAction = payload => {
-    return {
-        type: SET_MP_PROD_RESPONSE,
-        payload
-    };
-};
+export const notifyODProdChangesAction = payload => ({
+  type: NOTIFY_OD_PROD_CHANGES,
+  payload,
+});
