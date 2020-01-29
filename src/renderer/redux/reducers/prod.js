@@ -7,6 +7,7 @@ const initialStruct = {
   version: null,
   notifyChanges: true,
   failedAttempts: 0,
+  pingHistory: [],
 };
 
 const initialState = {
