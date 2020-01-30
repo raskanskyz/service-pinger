@@ -1,6 +1,5 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
-import stage from "./stage";
-import prod from "./prod";
+import mpProd from './mpProd.reducer';
 
-export default combineReducers({ stage, prod });
+export default combineReducers({ mpProd });

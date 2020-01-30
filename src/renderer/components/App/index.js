@@ -1,23 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+} from 'recharts';
+import {
   Tabs, List, Switch, Badge,
 } from 'antd';
 
-import {
-  establishConnectionAction,
-  closeConnectionAction,
-  notifyMPProdChangesAction,
-  notifyODProdChangesAction,
-} from '../../redux/actions';
-import {
-  mpProdStatusSelector,
-  odProdStatusSelector,
-  mpProdVersionSelector,
-  odProdVersionSelector,
-  notifyMPProdChangesSelector,
-  notifyODProdChangesSelector,
-} from '../../redux/selectors/prod';
+import { establishConnectionAction, closeConnectionAction, notifyMPProdChangesAction } from '../../redux/actions';
+import { mpProdStatusSelector, mpProdVersionSelector, notifyMPProdChangesSelector } from '../../redux/selectors/mpProd.selectors';
 
 const { TabPane } = Tabs;
 
@@ -25,11 +16,8 @@ export default () => {
   const dispatch = useDispatch();
 
   const mpProdStatus = useSelector(mpProdStatusSelector);
-  const odProdStatus = useSelector(odProdStatusSelector);
   const mpProdVersion = useSelector(mpProdVersionSelector);
-  const odProdVersion = useSelector(odProdVersionSelector);
   const notifyMPProdChanges = useSelector(notifyMPProdChangesSelector);
-  const notifyODProdChanges = useSelector(notifyODProdChangesSelector);
 
   useEffect(() => {
     dispatch(establishConnectionAction());
@@ -51,19 +39,11 @@ export default () => {
       status: mpProdStatus,
       notifyChanges: notifyMPProdChanges,
     },
-    {
-      key: 'org',
-      title: 'Organization Dashboard',
-      version: odProdVersion,
-      status: odProdStatus,
-      notifyChanges: notifyODProdChanges,
-    },
   ];
 
   const onChange = (checked, item) => {
     const actionMapper = {
       'mp-client': () => notifyMPProdChangesAction(checked),
-      org: () => notifyODProdChangesAction(checked),
     };
 
     return dispatch(actionMapper[item.key]());
@@ -94,7 +74,7 @@ export default () => {
                       {badgeRenderer(item.status)}
                       {item.title}
                     </span>
-)}
+                  )}
                   description={item.version}
                 />
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -105,7 +85,7 @@ export default () => {
           />
         </TabPane>
         <TabPane tab="Stage" key="2">
-                    Content of Tab Pane 2
+          Content of Tab Pane 2
         </TabPane>
       </Tabs>
     </div>
