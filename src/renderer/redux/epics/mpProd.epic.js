@@ -2,11 +2,11 @@ import { ofType } from 'redux-observable';
 import io from 'socket.io-client';
 import { fromEvent } from 'rxjs';
 import {
-  withLatestFrom, filter, switchMap, map, tap, ignoreElements, take,
+  withLatestFrom, switchMap, map, tap, take,
 } from 'rxjs/operators';
 
 import {
-  ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_PROD_MP_DATA, SET_MP_PROD_RESPONSE, SET_INIT_PROD_MP_DATA,
+  ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_PROD_MP_DATA, SET_INIT_PROD_MP_DATA,
 } from '../actionTypes';
 import { notifyMPProdChangesSelector, mpProdStatusSelector } from '../selectors/mpProd.selectors';
 import { getInitProdMPDataAction, setMPProdResponseAction, setInitProdMPDataAction } from '../actions';
@@ -33,28 +33,18 @@ const getInitProdMPData = action$ => action$.pipe(
   map(message => setInitProdMPDataAction(message)),
 );
 
-const startMPProdListen = action$ => action$.pipe(
+const startMPProdListen = (action$, state$) => action$.pipe(
   ofType(SET_INIT_PROD_MP_DATA),
-  tap(console.log),
   switchMap(() => fromEvent(socket, '[prod] mp-client pong')),
-  tap(console.log),
-  map(message => setMPProdResponseAction(message)),
-);
-
-const setMPProdResponse = (action$, state$) => action$.pipe(
-  ofType(SET_MP_PROD_RESPONSE),
   withLatestFrom(state$),
-  map(([action, state]) => [action.payload.status, notifyMPProdChangesSelector(state), mpProdStatusSelector(state)]),
-  filter(([currentServiceStatus, notifyChanges, prevServiceStatus]) => notifyChanges && prevServiceStatus !== null && prevServiceStatus !== currentServiceStatus),
-  tap(([currentServiceStatus]) => {
-    const title = currentServiceStatus ? 'Marketplace Is Back Up!' : 'Marketplace Is Down';
-    new Notification(title); // eslint-disable-line no-new
-
-    // myNotification.onclick = () => {
-    //   console.log('Notification clicked');
-    // };
+  map(([message, state]) => [message, notifyMPProdChangesSelector(state), mpProdStatusSelector(state)]),
+  tap(([message, notifyChanges, prevStatus]) => {
+    if (notifyChanges && prevStatus !== null && prevStatus !== message.status) {
+      const title = message.status ? 'Marketplace Is Back Up!' : 'Marketplace Is Down';
+      new Notification(title); // eslint-disable-line no-new
+    }
   }),
-  ignoreElements(),
+  map(([message]) => setMPProdResponseAction(message)),
 );
 
-export default [getInitProdMPData, establishConnection, closeConnection, startMPProdListen, setMPProdResponse];
+export default [getInitProdMPData, establishConnection, closeConnection, startMPProdListen];

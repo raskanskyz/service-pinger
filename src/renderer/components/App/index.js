@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar,
 } from 'recharts';
 import {
   Tabs, List, Switch, Badge,
 } from 'antd';
 
 import { establishConnectionAction, closeConnectionAction, notifyMPProdChangesAction } from '../../redux/actions';
-import { mpProdStatusSelector, mpProdVersionSelector, notifyMPProdChangesSelector } from '../../redux/selectors/mpProd.selectors';
+import {
+  mpProdStatusSelector, mpProdVersionSelector, notifyMPProdChangesSelector, mpProdPingHistorySelector,
+} from '../../redux/selectors/mpProd.selectors';
 
 const { TabPane } = Tabs;
 
@@ -18,6 +20,7 @@ export default () => {
   const mpProdStatus = useSelector(mpProdStatusSelector);
   const mpProdVersion = useSelector(mpProdVersionSelector);
   const notifyMPProdChanges = useSelector(notifyMPProdChangesSelector);
+  const mpProdPingHistory = useSelector(mpProdPingHistorySelector);
 
   useEffect(() => {
     dispatch(establishConnectionAction());
@@ -38,6 +41,7 @@ export default () => {
       version: mpProdVersion,
       status: mpProdStatus,
       notifyChanges: notifyMPProdChanges,
+      pingHistory: mpProdPingHistory.map(status => ({ status: status ? 1 : 0 })),
     },
   ];
 
@@ -80,13 +84,21 @@ export default () => {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <Switch checked={item.notifyChanges} size="small" onChange={e => onChange(e, item)} />
                 </div>
+                {/* <ResponsiveContainer> */}
+                <BarChart width={300} height={200} data={item.pingHistory}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis />
+                  <YAxis type="number" domain={[0, 1]} allowDecimals={false} />
+                  <Tooltip />
+                  <Legend />
+                  <Bar name="uptime" dataKey="status" fill="#8884d8" />
+                </BarChart>
+                {/* </ResponsiveContainer> */}
               </List.Item>
             )}
           />
         </TabPane>
-        <TabPane tab="Stage" key="2">
-          Content of Tab Pane 2
-        </TabPane>
+        <TabPane tab="Stage" key="2" />
       </Tabs>
     </div>
   );
