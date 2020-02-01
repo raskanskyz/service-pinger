@@ -1,4 +1,5 @@
 import { combineEpics } from 'redux-observable';
-import prodEpic from './mpProd.epic';
+import mpProdEpic from './mpProd.epic';
+import apiGatewayProd from './apiGatewayProd.epic';
 
-export default combineEpics(...prodEpic);
+export default combineEpics(...mpProdEpic, ...apiGatewayProd);

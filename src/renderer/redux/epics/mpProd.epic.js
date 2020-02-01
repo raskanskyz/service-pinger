@@ -9,7 +9,8 @@ import {
   ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_PROD_MP_DATA, SET_INIT_PROD_MP_DATA,
 } from '../actionTypes';
 import { notifyMPProdChangesSelector, mpProdStatusSelector } from '../selectors/mpProd.selectors';
-import { getInitProdMPDataAction, setMPProdResponseAction, setInitProdMPDataAction } from '../actions';
+import { getInitDataAction, setResponseAction, setInitDataAction } from '../actions';
+import { SERVICE_KEY } from '../../consts';
 
 let socket;
 const establishConnection = action$ => action$.pipe(
@@ -18,7 +19,7 @@ const establishConnection = action$ => action$.pipe(
     socket = io('http://localhost:3000', { transports: ['websocket'] });
     return fromEvent(socket, 'connect');
   }),
-  switchMap(() => [getInitProdMPDataAction()]),
+  switchMap(() => [getInitDataAction('prod', SERVICE_KEY.MARKETPLACE)]),
 );
 
 const closeConnection = action$ => action$.pipe(
@@ -30,7 +31,7 @@ const getInitProdMPData = action$ => action$.pipe(
   ofType(GET_INIT_PROD_MP_DATA),
   switchMap(() => fromEvent(socket, '[prod] mp-client pingHistory')),
   take(1),
-  map(message => setInitProdMPDataAction(message)),
+  map(message => setInitDataAction('prod', SERVICE_KEY.MARKETPLACE, message)),
 );
 
 const startMPProdListen = (action$, state$) => action$.pipe(
@@ -44,7 +45,7 @@ const startMPProdListen = (action$, state$) => action$.pipe(
       new Notification(title); // eslint-disable-line no-new
     }
   }),
-  map(([message]) => setMPProdResponseAction(message)),
+  map(([message]) => setResponseAction('prod', SERVICE_KEY.MARKETPLACE, message)),
 );
 
 export default [getInitProdMPData, establishConnection, closeConnection, startMPProdListen];

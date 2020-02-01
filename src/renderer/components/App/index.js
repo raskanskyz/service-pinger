@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar,
-} from 'recharts';
+// import {
+//   XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar,
+// } from 'recharts';
 import {
   Tabs, List, Switch, Badge,
 } from 'antd';
 
-import { establishConnectionAction, closeConnectionAction, notifyMPProdChangesAction } from '../../redux/actions';
+import { establishConnectionAction, closeConnectionAction, notifyChangesAction } from '../../redux/actions';
 import {
   mpProdStatusSelector, mpProdVersionSelector, notifyMPProdChangesSelector, mpProdPingHistorySelector,
 } from '../../redux/selectors/mpProd.selectors';
+import {
+  apiGatewayProdStatusSelector, apiGatewayProdVersionSelector, notifyApiGatewayProdChangesSelector, apiGatewayProdPingHistorySelector,
+} from '../../redux/selectors/apiGatewayProd.selectors';
+import { SERVICE_KEY } from '../../consts';
 
 const { TabPane } = Tabs;
 
@@ -21,6 +25,11 @@ export default () => {
   const mpProdVersion = useSelector(mpProdVersionSelector);
   const notifyMPProdChanges = useSelector(notifyMPProdChangesSelector);
   const mpProdPingHistory = useSelector(mpProdPingHistorySelector);
+
+  const apiGatewayProdStatus = useSelector(apiGatewayProdStatusSelector);
+  const apiGatewayProdVersion = useSelector(apiGatewayProdVersionSelector);
+  const notifyApiGatewayProdChanges = useSelector(notifyApiGatewayProdChangesSelector);
+  const apiGatewayProdPingHistory = useSelector(apiGatewayProdPingHistorySelector);
 
   useEffect(() => {
     dispatch(establishConnectionAction());
@@ -36,22 +45,24 @@ export default () => {
 
   const data = [
     {
-      key: 'mp-client',
+      key: SERVICE_KEY.MARKETPLACE,
       title: 'Marketplace',
       version: mpProdVersion,
       status: mpProdStatus,
       notifyChanges: notifyMPProdChanges,
       pingHistory: mpProdPingHistory.map(status => ({ status: status ? 1 : 0 })),
     },
+    {
+      key: SERVICE_KEY.API_GATEWAY,
+      title: 'Api Gateway',
+      version: apiGatewayProdVersion,
+      status: apiGatewayProdStatus,
+      notifyChanges: notifyApiGatewayProdChanges,
+      pingHistory: apiGatewayProdPingHistory.map(status => ({ status: status ? 1 : 0 })),
+    },
   ];
 
-  const onChange = (checked, item) => {
-    const actionMapper = {
-      'mp-client': () => notifyMPProdChangesAction(checked),
-    };
-
-    return dispatch(actionMapper[item.key]());
-  };
+  const onChange = (checked, env, item) => dispatch(notifyChangesAction(env, item.key, checked));
 
   const badgeRenderer = (status) => {
     const statusMapper = {
@@ -82,17 +93,17 @@ export default () => {
                   description={item.version}
                 />
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Switch checked={item.notifyChanges} size="small" onChange={e => onChange(e, item)} />
+                  <Switch checked={item.notifyChanges} size="small" onChange={e => onChange(e, 'prod', item)} />
                 </div>
                 {/* <ResponsiveContainer> */}
-                <BarChart width={300} height={200} data={item.pingHistory}>
+                {/* <BarChart width={300} height={200} data={item.pingHistory}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis />
                   <YAxis type="number" domain={[0, 1]} allowDecimals={false} />
                   <Tooltip />
                   <Legend />
                   <Bar name="uptime" dataKey="status" fill="#8884d8" />
-                </BarChart>
+                </BarChart> */}
                 {/* </ResponsiveContainer> */}
               </List.Item>
             )}
