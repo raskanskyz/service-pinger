@@ -8,7 +8,7 @@ import {
 import {
   ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_PROD_MP_DATA, SET_INIT_PROD_MP_DATA,
 } from '../actionTypes';
-import { notifyMPProdChangesSelector, mpProdStatusSelector } from '../selectors/mpProd.selectors';
+import { notifyOrgDashboardProdChangesSelector, orgDashboardProdStatusSelector } from '../selectors/orgDashboardProd.selectors';
 import { getInitDataAction, setResponseAction, setInitDataAction } from '../actions';
 import { SERVICE_KEY } from '../../consts';
 
@@ -19,7 +19,7 @@ const establishConnection = action$ => action$.pipe(
     socket = io('http://localhost:3000', { transports: ['websocket'] });
     return fromEvent(socket, 'connect');
   }),
-  switchMap(() => [getInitDataAction('prod', SERVICE_KEY.MARKETPLACE)]),
+  switchMap(() => [getInitDataAction('prod', SERVICE_KEY.ORG_DASHBOARD)]),
 );
 
 const closeConnection = action$ => action$.pipe(
@@ -29,23 +29,23 @@ const closeConnection = action$ => action$.pipe(
 
 const getInitProdMPData = action$ => action$.pipe(
   ofType(GET_INIT_PROD_MP_DATA),
-  switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.MARKETPLACE} pingHistory`)),
+  switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.ORG_DASHBOARD} pingHistory`)),
   take(1),
-  map(message => setInitDataAction('prod', SERVICE_KEY.MARKETPLACE, message)),
+  map(message => setInitDataAction('prod', SERVICE_KEY.ORG_DASHBOARD, message)),
 );
 
 const startMPProdListen = (action$, state$) => action$.pipe(
   ofType(SET_INIT_PROD_MP_DATA),
-  switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.MARKETPLACE} pong`)),
+  switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.ORG_DASHBOARD} pong`)),
   withLatestFrom(state$),
-  map(([message, state]) => [message, notifyMPProdChangesSelector(state), mpProdStatusSelector(state)]),
+  map(([message, state]) => [message, notifyOrgDashboardProdChangesSelector(state), orgDashboardProdStatusSelector(state)]),
   tap(([message, notifyChanges, prevStatus]) => {
     if (notifyChanges && prevStatus !== null && prevStatus !== message.status) {
-      const title = message.status ? 'Marketplace Is Back Up!' : 'Marketplace Is Down';
+      const title = message.status ? 'Org Dashboard Is Back Up!' : 'Org Dashboard Is Down';
       new Notification(title); // eslint-disable-line no-new
     }
   }),
-  map(([message]) => setResponseAction('prod', SERVICE_KEY.MARKETPLACE, message)),
+  map(([message]) => setResponseAction('prod', SERVICE_KEY.ORG_DASHBOARD, message)),
 );
 
 export default [getInitProdMPData, establishConnection, closeConnection, startMPProdListen];

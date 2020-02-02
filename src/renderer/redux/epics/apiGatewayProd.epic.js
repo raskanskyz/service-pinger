@@ -29,14 +29,14 @@ const closeConnection = action$ => action$.pipe(
 
 const getInitProdMPData = action$ => action$.pipe(
   ofType(GET_INIT_PROD_API_GATEWAY_DATA),
-  switchMap(() => fromEvent(socket, '[prod] api-gateway pingHistory')),
+  switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.API_GATEWAY} pingHistory`)),
   take(1),
   map(message => setInitDataAction('prod', SERVICE_KEY.API_GATEWAY, message)),
 );
 
 const setInitData = (action$, state$) => action$.pipe(
   ofType(SET_INIT_PROD_API_GATEWAY_DATA),
-  switchMap(() => fromEvent(socket, '[prod] api-gateway pong')),
+  switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.API_GATEWAY} pong`)),
   withLatestFrom(state$),
   map(([message, state]) => [message, notifyApiGatewayProdChangesSelector(state), apiGatewayProdStatusSelector(state)]),
   tap(([message, notifyChanges, prevStatus]) => {
