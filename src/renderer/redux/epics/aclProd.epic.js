@@ -29,8 +29,6 @@ const closeConnection = action$ => action$.pipe(
 
 const getInitProdMPData = action$ => action$.pipe(
   ofType(GET_INIT_PROD_MP_DATA),
-  switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.ACL} pingHistory`)),
-  take(1),
   map(message => setInitDataAction('prod', SERVICE_KEY.ACL, message)),
 );
 

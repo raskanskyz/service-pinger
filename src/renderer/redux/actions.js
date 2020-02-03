@@ -21,6 +21,7 @@ import {
   SET_API_PROD_RESPONSE,
   GET_INIT_PROD_API_DATA,
   NOTIFY_API_PROD_CHANGES,
+  SET_INIT_PROD_API_DATA,
 } from './actionTypes';
 
 export const establishConnectionAction = () => ({
@@ -80,7 +81,7 @@ export const setInitDataAction = (env, serviceKey, payload) => {
       [SERVICE_KEY.API_GATEWAY]: SET_INIT_PROD_API_GATEWAY_DATA,
       [SERVICE_KEY.ORG_DASHBOARD]: SET_INIT_PROD_ORG_DASHBOARD_DATA,
       [SERVICE_KEY.ACL]: SET_INIT_PROD_ACL_DATA,
-      [SERVICE_KEY.API]: SET_API_PROD_RESPONSE,
+      [SERVICE_KEY.API]: SET_INIT_PROD_API_DATA,
     },
     stage: {
 

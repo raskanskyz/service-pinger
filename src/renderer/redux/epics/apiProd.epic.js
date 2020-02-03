@@ -6,9 +6,9 @@ import {
 } from 'rxjs/operators';
 
 import {
-  ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_PROD_MP_DATA, SET_INIT_PROD_MP_DATA,
+  ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_PROD_API_DATA, SET_INIT_PROD_API_DATA,
 } from '../actionTypes';
-import { notifyAclProdChangesSelector, aclProdStatusSelector } from '../selectors/aclProd.selectors';
+import { notifyApiProdChangesSelector, apiProdStatusSelector } from '../selectors/apiProd.selectors';
 import { getInitDataAction, setResponseAction, setInitDataAction } from '../actions';
 import { SERVICE_KEY } from '../../consts';
 
@@ -27,25 +27,23 @@ const closeConnection = action$ => action$.pipe(
   switchMap(() => fromEvent(socket, 'disconnect')),
 );
 
-const getInitProdMPData = action$ => action$.pipe(
-  ofType(GET_INIT_PROD_MP_DATA),
-  switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.API} pingHistory`)),
-  take(1),
+const getInitProdApiData = action$ => action$.pipe(
+  ofType(GET_INIT_PROD_API_DATA),
   map(message => setInitDataAction('prod', SERVICE_KEY.API, message)),
 );
 
-const startMPProdListen = (action$, state$) => action$.pipe(
-  ofType(SET_INIT_PROD_MP_DATA),
+const startApiProdListen = (action$, state$) => action$.pipe(
+  ofType(SET_INIT_PROD_API_DATA),
   switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.API} pong`)),
   withLatestFrom(state$),
-  map(([message, state]) => [message, notifyAclProdChangesSelector(state), aclProdStatusSelector(state)]),
+  map(([message, state]) => [message, notifyApiProdChangesSelector(state), apiProdStatusSelector(state)]),
   tap(([message, notifyChanges, prevStatus]) => {
     if (notifyChanges && prevStatus !== null && prevStatus !== message.status) {
-      const title = message.status ? 'ACL Is Back Up!' : 'ACL Is Down';
+      const title = message.status ? 'Api Service Is Back Up!' : 'Api Service Is Down';
       new Notification(title); // eslint-disable-line no-new
     }
   }),
   map(([message]) => setResponseAction('prod', SERVICE_KEY.API, message)),
 );
 
-export default [getInitProdMPData, establishConnection, closeConnection, startMPProdListen];
+export default [getInitProdApiData, establishConnection, closeConnection, startApiProdListen];

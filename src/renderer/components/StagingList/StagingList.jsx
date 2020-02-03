@@ -5,49 +5,49 @@ import { List, Switch } from 'antd';
 
 import { SERVICE_KEY } from '../../consts';
 import {
-  mpProdStatusSelector, mpProdVersionSelector, notifyMPProdChangesSelector, mpProdPingHistorySelector,
+  mpProdStatusSelector, mpProdVersionSelector, notifyMPProdChangesSelector, mpProdUptimePercentSelector,
 } from '../../redux/selectors/mpProd.selectors';
 import {
-  apiGatewayProdStatusSelector, apiGatewayProdVersionSelector, notifyApiGatewayProdChangesSelector, apiGatewayProdPingHistorySelector,
+  apiGatewayProdStatusSelector, apiGatewayProdVersionSelector, notifyApiGatewayProdChangesSelector, apiGatewayProdUptimePercentSelector,
 } from '../../redux/selectors/apiGatewayProd.selectors';
 import {
   orgDashboardProdStatusSelector,
   orgDashboardProdVersionSelector,
   notifyOrgDashboardProdChangesSelector,
-  orgDashboardProdPingHistorySelector,
+  orgDashboardProdUptimePercentSelector,
 } from '../../redux/selectors/orgDashboardProd.selectors';
 import {
-  aclProdStatusSelector, aclProdVersionSelector, notifyAclProdChangesSelector, aclProdPingHistorySelector,
+  aclProdStatusSelector, aclProdVersionSelector, notifyAclProdChangesSelector, aclProdUptimePercentSelector,
 } from '../../redux/selectors/aclProd.selectors';
 import {
-  apiProdStatusSelector, apiProdVersionSelector, notifyApiProdChangesSelector, apiProdPingHistorySelector,
+  apiProdStatusSelector, apiProdVersionSelector, notifyApiProdChangesSelector, apiProdUptimePercentSelector,
 } from '../../redux/selectors/apiProd.selectors';
 
 export default ({ badgeRenderer, onChange }) => {
   const mpProdStatus = useSelector(mpProdStatusSelector);
   const mpProdVersion = useSelector(mpProdVersionSelector);
   const notifyMPProdChanges = useSelector(notifyMPProdChangesSelector);
-  const mpProdPingHistory = useSelector(mpProdPingHistorySelector);
+  const mpProdUptimePercent = useSelector(mpProdUptimePercentSelector);
 
   const apiGatewayProdStatus = useSelector(apiGatewayProdStatusSelector);
   const apiGatewayProdVersion = useSelector(apiGatewayProdVersionSelector);
   const notifyApiGatewayProdChanges = useSelector(notifyApiGatewayProdChangesSelector);
-  const apiGatewayProdPingHistory = useSelector(apiGatewayProdPingHistorySelector);
+  const apiGatewayProdUptimePercent = useSelector(apiGatewayProdUptimePercentSelector);
 
   const orgDashboardProdStatus = useSelector(orgDashboardProdStatusSelector);
   const orgDashboardProdVersion = useSelector(orgDashboardProdVersionSelector);
   const notifyOrgDashboardProdChanges = useSelector(notifyOrgDashboardProdChangesSelector);
-  const orgDashboardProdPingHistory = useSelector(orgDashboardProdPingHistorySelector);
+  const orgDashboardProdUptimePercent = useSelector(orgDashboardProdUptimePercentSelector);
 
   const aclProdStatus = useSelector(aclProdStatusSelector);
   const aclProdVersion = useSelector(aclProdVersionSelector);
   const notifyAclProdChanges = useSelector(notifyAclProdChangesSelector);
-  const aclProdPingHistory = useSelector(aclProdPingHistorySelector);
+  const aclProdUptimePercent = useSelector(aclProdUptimePercentSelector);
 
   const apiProdStatus = useSelector(apiProdStatusSelector);
   const apiProdVersion = useSelector(apiProdVersionSelector);
   const notifyApiProdChanges = useSelector(notifyApiProdChangesSelector);
-  const apiProdPingHistory = useSelector(apiProdPingHistorySelector);
+  const apiProdUptimePercent = useSelector(apiProdUptimePercentSelector);
 
   const data = [
     {
@@ -56,7 +56,7 @@ export default ({ badgeRenderer, onChange }) => {
       version: mpProdVersion,
       status: mpProdStatus,
       notifyChanges: notifyMPProdChanges,
-      pingHistory: mpProdPingHistory.map(status => ({ status: status ? 1 : 0 })),
+      uptimePercent: mpProdUptimePercent,
     },
     {
       key: SERVICE_KEY.API_GATEWAY,
@@ -64,7 +64,7 @@ export default ({ badgeRenderer, onChange }) => {
       version: apiGatewayProdVersion,
       status: apiGatewayProdStatus,
       notifyChanges: notifyApiGatewayProdChanges,
-      pingHistory: apiGatewayProdPingHistory.map(status => ({ status: status ? 1 : 0 })),
+      uptimePercent: apiGatewayProdUptimePercent,
     },
     {
       key: SERVICE_KEY.ORG_DASHBOARD,
@@ -72,7 +72,7 @@ export default ({ badgeRenderer, onChange }) => {
       version: orgDashboardProdVersion,
       status: orgDashboardProdStatus,
       notifyChanges: notifyOrgDashboardProdChanges,
-      pingHistory: orgDashboardProdPingHistory.map(status => ({ status: status ? 1 : 0 })),
+      uptimePercent: orgDashboardProdUptimePercent,
     },
     {
       key: SERVICE_KEY.ACL,
@@ -80,7 +80,7 @@ export default ({ badgeRenderer, onChange }) => {
       version: aclProdVersion,
       status: aclProdStatus,
       notifyChanges: notifyAclProdChanges,
-      pingHistory: aclProdPingHistory.map(status => ({ status: status ? 1 : 0 })),
+      uptimePercent: aclProdUptimePercent,
     },
     {
       key: SERVICE_KEY.API,
@@ -88,7 +88,7 @@ export default ({ badgeRenderer, onChange }) => {
       version: apiProdVersion,
       status: apiProdStatus,
       notifyChanges: notifyApiProdChanges,
-      pingHistory: apiProdPingHistory.map(status => ({ status: status ? 1 : 0 })),
+      uptimePercent: apiProdUptimePercent,
     },
   ];
 
