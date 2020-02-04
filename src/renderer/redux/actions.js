@@ -36,6 +36,7 @@ export const closeConnectionAction = () => ({
 export const setResponseAction = (env, serviceKey, payload) => {
   const actionMapper = {
     prod: {
+      // PLOP SET_RESPONSE PROD PLACEHOLDER
       [SERVICE_KEY.MARKETPLACE]: SET_MP_PROD_RESPONSE,
       [SERVICE_KEY.API_GATEWAY]: SET_API_GATEWAY_PROD_RESPONSE,
       [SERVICE_KEY.ORG_DASHBOARD]: SET_ORG_DASHBOARD_PROD_RESPONSE,
@@ -43,7 +44,7 @@ export const setResponseAction = (env, serviceKey, payload) => {
       [SERVICE_KEY.API]: SET_API_PROD_RESPONSE,
     },
     stage: {
-
+      // PLOP SET_RESPONSE STAGE PLACEHOLDER
     },
   };
 
@@ -56,6 +57,7 @@ export const setResponseAction = (env, serviceKey, payload) => {
 export const getInitDataAction = (env, serviceKey) => {
   const actionMapper = {
     prod: {
+      // PLOP GET_INIT_DATA PROD PLACEHOLDER
       [SERVICE_KEY.MARKETPLACE]: GET_INIT_PROD_MP_DATA,
       [SERVICE_KEY.API_GATEWAY]: GET_INIT_PROD_API_GATEWAY_DATA,
       [SERVICE_KEY.ORG_DASHBOARD]: GET_INIT_PROD_ORG_DASHBOARD_DATA,
@@ -63,7 +65,7 @@ export const getInitDataAction = (env, serviceKey) => {
       [SERVICE_KEY.API]: GET_INIT_PROD_API_DATA,
     },
     stage: {
-
+      // PLOP GET_INIT_DATA STAGE PLACEHOLDER
     },
   };
 
@@ -78,6 +80,7 @@ export const getInitDataAction = (env, serviceKey) => {
 export const setInitDataAction = (env, serviceKey, payload) => {
   const actionMapper = {
     prod: {
+      // PLOP SET_INIT_DATA PROD PLACEHOLDER
       [SERVICE_KEY.MARKETPLACE]: SET_INIT_PROD_MP_DATA,
       [SERVICE_KEY.API_GATEWAY]: SET_INIT_PROD_API_GATEWAY_DATA,
       [SERVICE_KEY.ORG_DASHBOARD]: SET_INIT_PROD_ORG_DASHBOARD_DATA,
@@ -85,7 +88,7 @@ export const setInitDataAction = (env, serviceKey, payload) => {
       [SERVICE_KEY.API]: SET_INIT_PROD_API_DATA,
     },
     stage: {
-
+      // PLOP SET_INIT_DATA STAGE PLACEHOLDER
     },
   };
 
@@ -98,6 +101,7 @@ export const setInitDataAction = (env, serviceKey, payload) => {
 export const notifyChangesAction = (env, serviceKey, payload) => {
   const actionMapper = {
     prod: {
+      // PLOP NOTIFY_CHANGES PROD PLACEHOLDER
       [SERVICE_KEY.MARKETPLACE]: NOTIFY_MP_PROD_CHANGES,
       [SERVICE_KEY.API_GATEWAY]: NOTIFY_API_GATEWAY_PROD_CHANGES,
       [SERVICE_KEY.ORG_DASHBOARD]: NOTIFY_ORG_DASHBOARD_PROD_CHANGES,
@@ -105,7 +109,7 @@ export const notifyChangesAction = (env, serviceKey, payload) => {
       [SERVICE_KEY.API]: NOTIFY_API_PROD_CHANGES,
     },
     stage: {
-
+      // PLOP NOTIFY_CHANGES STAGE PLACEHOLDER
     },
   };
 

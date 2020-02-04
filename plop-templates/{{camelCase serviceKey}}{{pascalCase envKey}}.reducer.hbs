@@ -1,0 +1,13 @@
+import initialState from './initialState';
+import { SET_{{constantCase serviceKey}}_{{constantCase envKey}}_RESPONSE, NOTIFY_{{constantCase serviceKey}}_{{constantCase envKey}}_CHANGES } from '../actionTypes';
+
+export default (state = { ...initialState }, action) => {
+  switch (action.type) {
+    case SET_{{constantCase serviceKey}}_{{constantCase envKey}}_RESPONSE:
+      return { ...state, ...action.payload };
+    case NOTIFY_{{constantCase serviceKey}}_{{constantCase envKey}}_CHANGES:
+      return { ...state, notifyChanges: action.payload };
+    default:
+      return state;
+  }
+};

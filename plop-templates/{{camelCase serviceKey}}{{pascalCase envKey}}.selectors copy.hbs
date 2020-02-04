@@ -1,0 +1,8 @@
+import { createSelector } from 'reselect';
+
+const baseSelector = state => state.{{camelCase serviceKey}}{{pascalCase envKey}};
+
+export const notify{{pascalCase serviceKey}}{{pascalCase envKey}}ChangesSelector = createSelector(baseSelector, state => state.notifyChanges);
+export const {{camelCase serviceKey}}{{pascalCase envKey}}StatusSelector = createSelector(baseSelector, state => state.status);
+export const {{camelCase serviceKey}}{{pascalCase envKey}}VersionSelector = createSelector(baseSelector, state => state.version);
+export const {{camelCase serviceKey}}{{pascalCase envKey}}UptimePercentSelector = createSelector(baseSelector, state => state.uptimePercent);
