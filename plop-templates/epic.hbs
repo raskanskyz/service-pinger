@@ -34,7 +34,7 @@ const getInit{{pascalCase envKey}}{{constantCase serviceKey}}Data = action$ => a
 
 const start{{pascalCase serviceKey}}{{pascalCase envKey}}Listen = (action$, state$) => action$.pipe(
   ofType(SET_INIT_{{upperCase envKey}}_{{constantCase serviceKey}}_DATA),
-  switchMap(() => fromEvent(socket, `[{{envKey}}] ${SERVICE_KEY.{{constantCase serviceKey}}\} pong`)),
+  switchMap(() => fromEvent(socket, `[{{envKey}}] ${SERVICE_KEY.{{constantCase serviceKey}}{{curly}} pong`)),
   withLatestFrom(state$),
   map(([message, state]) => [message, notify{{pascalCase serviceKey}}{{pascalCase envKey}}ChangesSelector(state), {{camelCase serviceKey}}{{pascalCase envKey}}StatusSelector(state)]),
   tap(([message, notifyChanges, prevStatus]) => {
