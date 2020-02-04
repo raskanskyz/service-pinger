@@ -2,7 +2,7 @@ import { ofType } from 'redux-observable';
 import io from 'socket.io-client';
 import { fromEvent } from 'rxjs';
 import {
-  withLatestFrom, switchMap, map, tap, take,
+  withLatestFrom, switchMap, map, tap,
 } from 'rxjs/operators';
 
 import {
