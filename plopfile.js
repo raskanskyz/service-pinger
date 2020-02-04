@@ -30,6 +30,17 @@ module.exports = (plop) => {
         },
       },
       {
+        type: 'input',
+        name: 'serviceName',
+        message: 'what is the service\'s name? (e.g Organization Dashboard, Acl Service, Issues Service, etc.)',
+        validate: (value) => {
+          if (/.+/.test(value)) {
+            return true;
+          }
+          return 'a name for the service must be provided';
+        },
+      },
+      {
         type: 'list',
         name: 'envKey',
         message: 'on what env do you want to ping the service?',
@@ -111,6 +122,11 @@ module.exports = (plop) => {
       },
       {
         type: 'add',
+        path: 'src/renderer/redux/selectors/{{camelCase serviceKey}}{{pascalCase envKey}}.selectors.js',
+        templateFile: 'plop-templates/selectors.hbs',
+      },
+      {
+        type: 'add',
         path: 'src/renderer/redux/reducers/{{camelCase serviceKey}}{{pascalCase envKey}}.reducer.js',
         templateFile: 'plop-templates/reducer.hbs',
       },
@@ -146,6 +162,42 @@ module.exports = (plop) => {
         type: 'add',
         path: 'src/renderer/redux/epics/{{camelCase serviceKey}}{{pascalCase envKey}}.epic.js',
         templateFile: 'plop-templates/epic.hbs',
+      },
+      {
+        type: 'modify',
+        path: 'src/renderer/components/ProductionList/ProductionList.jsx',
+        pattern: /(\/\/ PLOP PROD LIST IMPORTS)/g,
+        templateFile: 'plop-templates/append/listImports.prod.hbs',
+      },
+      {
+        type: 'modify',
+        path: 'src/renderer/components/StagingList/StagingList.jsx',
+        pattern: /(\/\/ PLOP STAGE LIST IMPORTS)/g,
+        templateFile: 'plop-templates/append/listImports.stage.hbs',
+      },
+      {
+        type: 'modify',
+        path: 'src/renderer/components/ProductionList/ProductionList.jsx',
+        pattern: /(\/\/ PLOP PROD LIST SELECTORS)/g,
+        templateFile: 'plop-templates/append/listSelectors.prod.hbs',
+      },
+      {
+        type: 'modify',
+        path: 'src/renderer/components/StagingList/StagingList.jsx',
+        pattern: /(\/\/ PLOP STAGE LIST SELECTORS)/g,
+        templateFile: 'plop-templates/append/listSelectors.stage.hbs',
+      },
+      {
+        type: 'modify',
+        path: 'src/renderer/components/ProductionList/ProductionList.jsx',
+        pattern: /(\/\/ PLOP PROD LIST DATA)/g,
+        templateFile: 'plop-templates/append/listData.prod.hbs',
+      },
+      {
+        type: 'modify',
+        path: 'src/renderer/components/StagingList/StagingList.jsx',
+        pattern: /(\/\/ PLOP STAGE LIST DATA)/g,
+        templateFile: 'plop-templates/append/listData.stage.hbs',
       },
     ],
   });

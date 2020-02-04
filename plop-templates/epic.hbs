@@ -39,7 +39,7 @@ const start{{pascalCase serviceKey}}{{pascalCase envKey}}Listen = (action$, stat
   map(([message, state]) => [message, notify{{pascalCase serviceKey}}{{pascalCase envKey}}ChangesSelector(state), {{camelCase serviceKey}}{{pascalCase envKey}}StatusSelector(state)]),
   tap(([message, notifyChanges, prevStatus]) => {
     if (notifyChanges && prevStatus !== null && prevStatus !== message.status) {
-      const title = message.status ? '{{titleCase serviceKey}} Is Back Up!' : '{{titleCase serviceKey}} Is Down';
+      const title = message.status ? '{{titleCase serviceName}} Is Back Up!' : '{{titleCase serviceName}} Is Down';
       new Notification(title); // eslint-disable-line no-new
     }
   }),

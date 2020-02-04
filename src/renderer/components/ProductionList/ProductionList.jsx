@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { List, Switch } from 'antd';
 
 import { SERVICE_KEY } from '../../consts';
+
+// PLOP PROD LIST IMPORTS
 import {
   mpProdStatusSelector, mpProdVersionSelector, notifyMPProdChangesSelector, mpProdUptimePercentSelector,
 } from '../../redux/selectors/mpProd.selectors';
@@ -24,6 +26,8 @@ import {
 } from '../../redux/selectors/apiProd.selectors';
 
 export default ({ badgeRenderer, onChange }) => {
+  // PLOP PROD LIST SELECTORS
+
   const mpProdStatus = useSelector(mpProdStatusSelector);
   const mpProdVersion = useSelector(mpProdVersionSelector);
   const notifyMPProdChanges = useSelector(notifyMPProdChangesSelector);
@@ -50,6 +54,7 @@ export default ({ badgeRenderer, onChange }) => {
   const apiProdUptimePercent = useSelector(apiProdUptimePercentSelector);
 
   const data = [
+    // PLOP PROD LIST DATA
     {
       key: SERVICE_KEY.MARKETPLACE,
       title: 'Marketplace',

@@ -1,0 +1,10 @@
+$1{{#if_equal envKey "stage"}}
+    {
+      key: SERVICE_KEY.{{constantCase serviceKey}},
+      title: '{{titleCase serviceName}}',
+      version: {{camelCase serviceKey}}{{pascalCase envKey}}Version,
+      status: {{camelCase serviceKey}}{{pascalCase envKey}}Status,
+      notifyChanges: notify{{pascalCase serviceKey}}{{pascalCase envKey}}Changes,
+      uptimePercent: {{camelCase serviceKey}}{{pascalCase envKey}}UptimePercent,
+    },
+{{/if_equal}}

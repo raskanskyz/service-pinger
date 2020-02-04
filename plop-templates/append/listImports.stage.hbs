@@ -1,0 +1,5 @@
+$1{{#if_equal envKey "stage"}}
+import {
+  {{camelCase serviceKey}}{{pascalCase envKey}}StatusSelector, {{camelCase serviceKey}}{{pascalCase envKey}}VersionSelector, notify{{pascalCase serviceKey}}{{pascalCase envKey}}ChangesSelector, {{camelCase serviceKey}}{{pascalCase envKey}}UptimePercentSelector,
+} from '../../redux/selectors/{{camelCase serviceKey}}{{pascalCase envKey}}.selectors';
+\n{{/if_equal}}

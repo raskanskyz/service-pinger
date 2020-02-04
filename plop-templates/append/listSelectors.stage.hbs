@@ -1,0 +1,6 @@
+  $1{{#if_equal envKey "stage"}}
+  const {{camelCase serviceKey}}{{pascalCase envKey}}Status = useSelector({{camelCase serviceKey}}{{pascalCase envKey}}StatusSelector);
+  const {{camelCase serviceKey}}{{pascalCase envKey}}Version = useSelector({{camelCase serviceKey}}{{pascalCase envKey}}VersionSelector);
+  const notify{{pascalCase serviceKey}}{{pascalCase envKey}}Changes = useSelector(notify{{pascalCase serviceKey}}{{pascalCase envKey}}ChangesSelector);
+  const {{camelCase serviceKey}}{{pascalCase envKey}}UptimePercent = useSelector({{camelCase serviceKey}}{{pascalCase envKey}}UptimePercentSelector);
+  {{/if_equal}}
