@@ -129,8 +129,8 @@ module.exports = (plop) => {
       // },
       {
         type: 'add',
-        path: 'src/renderer/redux/selectors/{{camelCase serviceKey}}{{pascalCase envKey}}.selectors.js',
-        templateFile: 'plop-templates/selectors.hbs',
+        path: 'src/renderer/redux/epics/{{camelCase serviceKey}}{{pascalCase envKey}}.epic.js',
+        templateFile: 'plop-templates/epic.hbs',
       },
     ],
   });
