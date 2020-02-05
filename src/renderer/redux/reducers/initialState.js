@@ -3,4 +3,5 @@ export default {
   version: null,
   notifyChanges: true,
   uptimePercent: 0,
+  downtimeDuration: 0,
 };

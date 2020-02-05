@@ -6,6 +6,7 @@ import mpProdEpic from './mpProd.epic';
 import apiGatewayProd from './apiGatewayProd.epic';
 import aclProd from './aclProd.epic';
 import apiProd from './apiProd.epic';
+import ui from './ui.epic';
 
 export default combineEpics(
   // PLOP COMBINE_EPICS PLACEHOLDER
@@ -14,4 +15,5 @@ export default combineEpics(
   ...apiGatewayProd,
   ...aclProd,
   ...apiProd,
+  ...ui,
 );

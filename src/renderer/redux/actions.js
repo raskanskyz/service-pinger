@@ -23,6 +23,7 @@ import {
   NOTIFY_API_PROD_CHANGES,
   ESTABLISH_CONNECTION,
   CLOSE_CONNECTION,
+  SHOW_NOTIFICATION,
 } from './actionTypes';
 
 export const establishConnectionAction = () => ({
@@ -31,6 +32,11 @@ export const establishConnectionAction = () => ({
 
 export const closeConnectionAction = () => ({
   type: CLOSE_CONNECTION,
+});
+
+export const showNotificationAction = payload => ({
+  type: SHOW_NOTIFICATION,
+  payload,
 });
 
 export const setResponseAction = (env, serviceKey, payload) => {
