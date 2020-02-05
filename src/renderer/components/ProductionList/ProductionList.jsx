@@ -7,17 +7,16 @@ import { SERVICE_KEY } from '../../consts';
 
 // PLOP PROD LIST IMPORTS
 import {
+  issuesProdStatusSelector, issuesProdVersionSelector, notifyIssuesProdChangesSelector, issuesProdUptimePercentSelector,
+} from '../../redux/selectors/issuesProd.selectors';
+
+import {
   mpProdStatusSelector, mpProdVersionSelector, notifyMPProdChangesSelector, mpProdUptimePercentSelector,
 } from '../../redux/selectors/mpProd.selectors';
 import {
   apiGatewayProdStatusSelector, apiGatewayProdVersionSelector, notifyApiGatewayProdChangesSelector, apiGatewayProdUptimePercentSelector,
 } from '../../redux/selectors/apiGatewayProd.selectors';
-import {
-  orgDashboardProdStatusSelector,
-  orgDashboardProdVersionSelector,
-  notifyOrgDashboardProdChangesSelector,
-  orgDashboardProdUptimePercentSelector,
-} from '../../redux/selectors/orgDashboardProd.selectors';
+
 import {
   aclProdStatusSelector, aclProdVersionSelector, notifyAclProdChangesSelector, aclProdUptimePercentSelector,
 } from '../../redux/selectors/aclProd.selectors';
@@ -27,6 +26,11 @@ import {
 
 export default ({ badgeRenderer, onChange }) => {
   // PLOP PROD LIST SELECTORS
+  const issuesProdStatus = useSelector(issuesProdStatusSelector);
+  const issuesProdVersion = useSelector(issuesProdVersionSelector);
+  const notifyIssuesProdChanges = useSelector(notifyIssuesProdChangesSelector);
+  const issuesProdUptimePercent = useSelector(issuesProdUptimePercentSelector);
+
 
   const mpProdStatus = useSelector(mpProdStatusSelector);
   const mpProdVersion = useSelector(mpProdVersionSelector);
@@ -37,11 +41,6 @@ export default ({ badgeRenderer, onChange }) => {
   const apiGatewayProdVersion = useSelector(apiGatewayProdVersionSelector);
   const notifyApiGatewayProdChanges = useSelector(notifyApiGatewayProdChangesSelector);
   const apiGatewayProdUptimePercent = useSelector(apiGatewayProdUptimePercentSelector);
-
-  const orgDashboardProdStatus = useSelector(orgDashboardProdStatusSelector);
-  const orgDashboardProdVersion = useSelector(orgDashboardProdVersionSelector);
-  const notifyOrgDashboardProdChanges = useSelector(notifyOrgDashboardProdChangesSelector);
-  const orgDashboardProdUptimePercent = useSelector(orgDashboardProdUptimePercentSelector);
 
   const aclProdStatus = useSelector(aclProdStatusSelector);
   const aclProdVersion = useSelector(aclProdVersionSelector);
@@ -55,6 +54,15 @@ export default ({ badgeRenderer, onChange }) => {
 
   const data = [
     // PLOP PROD LIST DATA
+    {
+      key: SERVICE_KEY.ISSUES,
+      title: 'Issues Service',
+      version: issuesProdVersion,
+      status: issuesProdStatus,
+      notifyChanges: notifyIssuesProdChanges,
+      uptimePercent: issuesProdUptimePercent,
+    },
+
     {
       key: SERVICE_KEY.MARKETPLACE,
       title: 'Marketplace',
@@ -70,14 +78,6 @@ export default ({ badgeRenderer, onChange }) => {
       status: apiGatewayProdStatus,
       notifyChanges: notifyApiGatewayProdChanges,
       uptimePercent: apiGatewayProdUptimePercent,
-    },
-    {
-      key: SERVICE_KEY.ORG_DASHBOARD,
-      title: 'Org Dashboard',
-      version: orgDashboardProdVersion,
-      status: orgDashboardProdStatus,
-      notifyChanges: notifyOrgDashboardProdChanges,
-      uptimePercent: orgDashboardProdUptimePercent,
     },
     {
       key: SERVICE_KEY.ACL,
