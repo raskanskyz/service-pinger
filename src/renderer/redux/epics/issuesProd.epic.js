@@ -1,15 +1,17 @@
 import { ofType } from 'redux-observable';
 import io from 'socket.io-client';
-import { fromEvent } from 'rxjs';
+import { fromEvent, of } from 'rxjs';
 import {
-  withLatestFrom, switchMap, map, tap,
+  withLatestFrom, switchMap, map, concatMap,
 } from 'rxjs/operators';
 
 import {
   ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_PROD_ISSUES_DATA, SET_INIT_PROD_ISSUES_DATA,
 } from '../actionTypes';
 import { notifyIssuesProdChangesSelector, issuesProdStatusSelector } from '../selectors/issuesProd.selectors';
-import { getInitDataAction, setResponseAction, setInitDataAction } from '../actions';
+import {
+  getInitDataAction, setResponseAction, setInitDataAction, showNotificationAction,
+} from '../actions';
 import { SERVICE_KEY } from '../../consts';
 
 let socket;
@@ -27,7 +29,7 @@ const closeConnection = action$ => action$.pipe(
   switchMap(() => fromEvent(socket, 'disconnect')),
 );
 
-const getInitProdISSUESData = action$ => action$.pipe(
+const getInitProdIssuesData = action$ => action$.pipe(
   ofType(GET_INIT_PROD_ISSUES_DATA),
   map(message => setInitDataAction('prod', SERVICE_KEY.ISSUES, message)),
 );
@@ -37,13 +39,16 @@ const startIssuesProdListen = (action$, state$) => action$.pipe(
   switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.ISSUES} pong`)),
   withLatestFrom(state$),
   map(([message, state]) => [message, notifyIssuesProdChangesSelector(state), issuesProdStatusSelector(state)]),
-  tap(([message, notifyChanges, prevStatus]) => {
+  concatMap(([message, notifyChanges, prevStatus]) => {
     if (notifyChanges && prevStatus !== null && prevStatus !== message.status) {
-      const title = message.status ? 'Issues Service Is Back Up!' : 'Issues Service Is Down';
-      new Notification(title); // eslint-disable-line no-new
+      return of(
+        showNotificationAction({ status: message.status, serviceName: 'Issues Service', downtimeDuration: message.downtimeDuration }),
+        setResponseAction('prod', SERVICE_KEY.ISSUES, message),
+      );
     }
+
+    return of(setResponseAction('prod', SERVICE_KEY.ISSUES, message));
   }),
-  map(([message]) => setResponseAction('prod', SERVICE_KEY.ISSUES, message)),
 );
 
-export default [getInitProdISSUESData, establishConnection, closeConnection, startIssuesProdListen];
+export default [getInitProdIssuesData, establishConnection, closeConnection, startIssuesProdListen];

@@ -8,6 +8,7 @@ import { establishConnectionAction, closeConnectionAction, notifyChangesAction }
 
 
 import ProductionList from '../ProductionList/ProductionList';
+import StagingList from '../StagingList/StagingList';
 
 const { TabPane } = Tabs;
 
@@ -41,7 +42,7 @@ export default () => {
           <ProductionList badgeRenderer={badgeRenderer} onChange={onChange} />
         </TabPane>
         <TabPane tab="Stage" key="2">
-          {/* <StagingList badgeRenderer={badgeRenderer} onChange={onChange} /> */}
+          <StagingList badgeRenderer={badgeRenderer} onChange={onChange} />
         </TabPane>
       </Tabs>
     </div>

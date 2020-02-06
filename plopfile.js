@@ -45,8 +45,8 @@ module.exports = (plop) => {
         name: 'envKey',
         message: 'on what env do you want to ping the service?',
         choices: [
-          { name: 'staging', value: 'stage' },
           { name: 'production', value: 'prod' },
+          { name: 'staging', value: 'stage' },
         ],
       },
     ],

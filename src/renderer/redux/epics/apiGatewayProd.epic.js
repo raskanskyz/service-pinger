@@ -1,15 +1,17 @@
 import { ofType } from 'redux-observable';
 import io from 'socket.io-client';
-import { fromEvent } from 'rxjs';
+import { fromEvent, of } from 'rxjs';
 import {
-  withLatestFrom, switchMap, map, tap,
+  withLatestFrom, switchMap, map, concatMap,
 } from 'rxjs/operators';
 
 import {
   ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_PROD_API_GATEWAY_DATA, SET_INIT_PROD_API_GATEWAY_DATA,
 } from '../actionTypes';
 import { notifyApiGatewayProdChangesSelector, apiGatewayProdStatusSelector } from '../selectors/apiGatewayProd.selectors';
-import { getInitDataAction, setInitDataAction, setResponseAction } from '../actions';
+import {
+  getInitDataAction, setInitDataAction, setResponseAction, showNotificationAction,
+} from '../actions';
 import { SERVICE_KEY } from '../../consts';
 
 let socket;
@@ -27,7 +29,7 @@ const closeConnection = action$ => action$.pipe(
   switchMap(() => fromEvent(socket, 'disconnect')),
 );
 
-const getInitProdMPData = action$ => action$.pipe(
+const getInitProdApiGatewayData = action$ => action$.pipe(
   ofType(GET_INIT_PROD_API_GATEWAY_DATA),
   map(message => setInitDataAction('prod', SERVICE_KEY.API_GATEWAY, message)),
 );
@@ -37,13 +39,16 @@ const setInitData = (action$, state$) => action$.pipe(
   switchMap(() => fromEvent(socket, `[prod] ${SERVICE_KEY.API_GATEWAY} pong`)),
   withLatestFrom(state$),
   map(([message, state]) => [message, notifyApiGatewayProdChangesSelector(state), apiGatewayProdStatusSelector(state)]),
-  tap(([message, notifyChanges, prevStatus]) => {
+  concatMap(([message, notifyChanges, prevStatus]) => {
     if (notifyChanges && prevStatus !== null && prevStatus !== message.status) {
-      const title = message.status ? 'Api Gateway Is Back Up!' : 'Api Gateway Is Down';
-      new Notification(title); // eslint-disable-line no-new
+      return of(
+        showNotificationAction({ status: message.status, serviceName: 'Api Gateway', downtimeDuration: message.downtimeDuration }),
+        setResponseAction('prod', SERVICE_KEY.API_GATEWAY, message),
+      );
     }
+
+    return of(setResponseAction('prod', SERVICE_KEY.API_GATEWAY, message));
   }),
-  map(([message]) => setResponseAction('prod', SERVICE_KEY.API_GATEWAY, message)),
 );
 
-export default [getInitProdMPData, establishConnection, closeConnection, setInitData];
+export default [getInitProdApiGatewayData, establishConnection, closeConnection, setInitData];

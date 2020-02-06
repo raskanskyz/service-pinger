@@ -1,6 +1,6 @@
 import { ofType } from 'redux-observable';
 import io from 'socket.io-client';
-import { fromEvent } from 'rxjs';
+import { fromEvent, of } from 'rxjs';
 import {
   withLatestFrom, switchMap, map, concatMap,
 } from 'rxjs/operators';
@@ -27,7 +27,7 @@ const closeConnection = action$ => action$.pipe(
   switchMap(() => fromEvent(socket, 'disconnect')),
 );
 
-const getInit{{pascalCase envKey}}{{constantCase serviceKey}}Data = action$ => action$.pipe(
+const getInit{{pascalCase envKey}}{{pascalCase serviceKey}}Data = action$ => action$.pipe(
   ofType(GET_INIT_{{upperCase envKey}}_{{constantCase serviceKey}}_DATA),
   map(message => setInitDataAction('{{envKey}}', SERVICE_KEY.{{constantCase serviceKey}}, message)),
 );
@@ -40,14 +40,13 @@ const start{{pascalCase serviceKey}}{{pascalCase envKey}}Listen = (action$, stat
   concatMap(([message, notifyChanges, prevStatus]) => {
     if (notifyChanges && prevStatus !== null && prevStatus !== message.status) {
       return of(
-        showNotificationAction({ status: message.status, serviceName: {{titleCase serviceName}}, downtimeDuration: message.downtimeDuration }),
+        showNotificationAction({ status: message.status, serviceName: '{{titleCase serviceName}}', downtimeDuration: message.downtimeDuration }),
         setResponseAction('{{envKey}}', SERVICE_KEY.{{constantCase serviceKey}}, message),
       )
     }
 
     return of(setResponseAction('{{envKey}}', SERVICE_KEY.{{constantCase serviceKey}}, message));
-  }),
-  map(([message]) => setResponseAction('{{envKey}}', SERVICE_KEY.{{constantCase serviceKey}}, message)),
+  })
 );
 
-export default [getInit{{pascalCase envKey}}{{constantCase serviceKey}}Data, establishConnection, closeConnection, start{{pascalCase serviceKey}}{{pascalCase envKey}}Listen];
+export default [getInit{{pascalCase envKey}}{{pascalCase serviceKey}}Data, establishConnection, closeConnection, start{{pascalCase serviceKey}}{{pascalCase envKey}}Listen];

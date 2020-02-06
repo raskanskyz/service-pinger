@@ -1,6 +1,10 @@
 import { SERVICE_KEY } from '../consts';
 import {
   // PLOP ACTION IMPORTS PLACEHOLDER
+  GET_INIT_STAGE_API_DATA,
+  SET_INIT_STAGE_API_DATA,
+  SET_API_STAGE_RESPONSE,
+  NOTIFY_API_STAGE_CHANGES,
   GET_INIT_PROD_ISSUES_DATA,
   SET_INIT_PROD_ISSUES_DATA,
   SET_ISSUES_PROD_RESPONSE,
@@ -52,6 +56,8 @@ export const setResponseAction = (env, serviceKey, payload) => {
     },
     stage: {
       // PLOP SET_RESPONSE STAGE PLACEHOLDER
+      [SERVICE_KEY.API]: SET_API_STAGE_RESPONSE,
+
     },
   };
 
@@ -74,6 +80,8 @@ export const getInitDataAction = (env, serviceKey) => {
     },
     stage: {
       // PLOP GET_INIT_DATA STAGE PLACEHOLDER
+      [SERVICE_KEY.API]: GET_INIT_STAGE_API_DATA,
+
     },
   };
 
@@ -98,6 +106,8 @@ export const setInitDataAction = (env, serviceKey, payload) => {
     },
     stage: {
       // PLOP SET_INIT_DATA STAGE PLACEHOLDER
+      [SERVICE_KEY.API]: SET_INIT_STAGE_API_DATA,
+
     },
   };
 
@@ -120,6 +130,8 @@ export const notifyChangesAction = (env, serviceKey, payload) => {
     },
     stage: {
       // PLOP NOTIFY_CHANGES STAGE PLACEHOLDER
+      [SERVICE_KEY.API]: NOTIFY_API_STAGE_CHANGES,
+
     },
   };
 

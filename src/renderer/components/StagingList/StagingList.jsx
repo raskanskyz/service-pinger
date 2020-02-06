@@ -6,12 +6,29 @@ import { List, Switch } from 'antd';
 import { SERVICE_KEY } from '../../consts';
 
 // PLOP STAGE LIST IMPORTS
+import {
+  apiStageStatusSelector, apiStageVersionSelector, notifyApiStageChangesSelector, apiStageUptimePercentSelector,
+} from '../../redux/selectors/apiStage.selectors';
 
 export default ({ badgeRenderer, onChange }) => {
   // PLOP STAGE LIST SELECTORS
+  const apiStageStatus = useSelector(apiStageStatusSelector);
+  const apiStageVersion = useSelector(apiStageVersionSelector);
+  const notifyApiStageChanges = useSelector(notifyApiStageChangesSelector);
+  const apiStageUptimePercent = useSelector(apiStageUptimePercentSelector);
+
 
   const data = [
     // PLOP STAGE LIST DATA
+    {
+      key: SERVICE_KEY.API,
+      title: 'Api Service',
+      version: apiStageVersion,
+      status: apiStageStatus,
+      notifyChanges: notifyApiStageChanges,
+      uptimePercent: apiStageUptimePercent,
+    },
+
   ];
 
   return (
