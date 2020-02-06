@@ -6,7 +6,7 @@ export default (state = { ...initialState }, action) => {
     case SET_API_PROD_RESPONSE:
       return { ...state, ...action.payload };
     case NOTIFY_API_PROD_CHANGES:
-      return { ...state, notifyChanges: action.payload };
+      return { ...state, notifyChanges: action.payload.notifyChanges };
     default:
       return state;
   }

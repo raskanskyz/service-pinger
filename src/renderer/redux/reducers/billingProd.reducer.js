@@ -1,11 +1,11 @@
 import initialState from './initialState';
-import { SET_ISSUES_PROD_RESPONSE, NOTIFY_ISSUES_PROD_CHANGES } from '../actionTypes';
+import { SET_BILLING_PROD_RESPONSE, NOTIFY_BILLING_PROD_CHANGES } from '../actionTypes';
 
 export default (state = { ...initialState }, action) => {
   switch (action.type) {
-    case SET_ISSUES_PROD_RESPONSE:
+    case SET_BILLING_PROD_RESPONSE:
       return { ...state, ...action.payload };
-    case NOTIFY_ISSUES_PROD_CHANGES:
+    case NOTIFY_BILLING_PROD_CHANGES:
       return { ...state, notifyChanges: action.payload.notifyChanges };
     default:
       return state;

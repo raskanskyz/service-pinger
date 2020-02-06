@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 // PLOP IMPORT REDUCERS PLACEHOLDER
+import billingProd from './billingProd.reducer';
 import apiStage from './apiStage.reducer';
 import issuesProd from './issuesProd.reducer';
 import mpProd from './mpProd.reducer';
@@ -10,6 +11,7 @@ import apiProd from './apiProd.reducer';
 
 export default combineReducers({
   // PLOP COMBINE_REDUCERS PLACEHOLDER
+  billingProd,
   apiStage,
   issuesProd,
   mpProd,
