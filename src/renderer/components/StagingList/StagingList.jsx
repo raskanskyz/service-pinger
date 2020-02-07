@@ -13,6 +13,7 @@ import {
 export default ({ badgeRenderer, onChange }) => {
   // PLOP STAGE LIST SELECTORS
 
+
   const apiStageStatus = useSelector(apiStageStatusSelector);
   const apiStageVersion = useSelector(apiStageVersionSelector);
   const notifyApiStageChanges = useSelector(notifyApiStageChangesSelector);

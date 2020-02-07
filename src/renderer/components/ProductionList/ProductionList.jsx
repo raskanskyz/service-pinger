@@ -7,6 +7,10 @@ import { SERVICE_KEY } from '../../consts';
 
 // PLOP PROD LIST IMPORTS
 import {
+  echProdStatusSelector, echProdVersionSelector, notifyEchProdChangesSelector, echProdUptimePercentSelector,
+} from '../../redux/selectors/echProd.selectors';
+
+import {
   billingProdStatusSelector, billingProdVersionSelector, notifyBillingProdChangesSelector, billingProdUptimePercentSelector,
 } from '../../redux/selectors/billingProd.selectors';
 
@@ -30,6 +34,11 @@ import {
 
 export default ({ badgeRenderer, onChange }) => {
   // PLOP PROD LIST SELECTORS
+  const echProdStatus = useSelector(echProdStatusSelector);
+  const echProdVersion = useSelector(echProdVersionSelector);
+  const notifyEchProdChanges = useSelector(notifyEchProdChangesSelector);
+  const echProdUptimePercent = useSelector(echProdUptimePercentSelector);
+
   const billingProdStatus = useSelector(billingProdStatusSelector);
   const billingProdVersion = useSelector(billingProdVersionSelector);
   const notifyBillingProdChanges = useSelector(notifyBillingProdChangesSelector);
@@ -63,6 +72,15 @@ export default ({ badgeRenderer, onChange }) => {
 
   const data = [
     // PLOP PROD LIST DATA
+    {
+      key: SERVICE_KEY.ECH,
+      title: 'Ech',
+      version: echProdVersion,
+      status: echProdStatus,
+      notifyChanges: notifyEchProdChanges,
+      uptimePercent: echProdUptimePercent,
+    },
+
     {
       key: SERVICE_KEY.BILLING,
       title: 'Billing Service',
