@@ -6,5 +6,6 @@ $1{{#if_equal envKey "stage"}}
       status: {{camelCase serviceKey}}{{pascalCase envKey}}Status,
       notifyChanges: notify{{pascalCase serviceKey}}{{pascalCase envKey}}Changes,
       uptimePercent: {{camelCase serviceKey}}{{pascalCase envKey}}UptimePercent,
+      versionDeploymentDate: {{camelCase serviceKey}}{{pascalCase envKey}}VersionDeploymentDate,
     },
 {{/if_equal}}

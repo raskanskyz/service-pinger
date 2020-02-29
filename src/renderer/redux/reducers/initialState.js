@@ -4,4 +4,5 @@ export default {
   notifyChanges: true,
   uptimePercent: 0,
   downtimeDuration: 0,
+  versionDeploymentDate: null,
 };

@@ -1,4 +1,13 @@
 {
-    "presets": ["react", "stage-0"],
-    "plugins": [["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]]
+  "presets": ["react", "stage-0"],
+  "plugins": [
+    [
+      "import",
+      [
+        { "libraryName": "antd", "libraryDirectory": "es", "style": "css" },
+        { "libraryName": "lodash-es", "libraryDirectory": "", "camel2DashComponentName": false }
+      ]
+    ]
+    // ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }],
+  ]
 }

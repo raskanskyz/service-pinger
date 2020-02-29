@@ -28,7 +28,7 @@ export default ({ badgeRenderer, onChange }) => {
       version: apiStageVersion,
       status: apiStageStatus,
       notifyChanges: notifyApiStageChanges,
-      uptimePercent: apiStageUptimePercent,
+      uptimePercent: apiStageUptimePercent.toFixed(2),
     },
 
   ];

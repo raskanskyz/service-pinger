@@ -6,3 +6,4 @@ export const notifyApiProdChangesSelector = createSelector(baseSelector, state =
 export const apiProdStatusSelector = createSelector(baseSelector, state => state.status);
 export const apiProdVersionSelector = createSelector(baseSelector, state => state.version);
 export const apiProdUptimePercentSelector = createSelector(baseSelector, state => state.uptimePercent);
+export const apiProdVersionDeploymentDateSelector = createSelector(baseSelector, state => state.versionDeploymentDate);

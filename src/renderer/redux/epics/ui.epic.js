@@ -14,6 +14,7 @@ import {
   NOTIFY_ACL_PROD_CHANGES,
   NOTIFY_API_PROD_CHANGES,
   NOTIFY_BILLING_PROD_CHANGES,
+  NOTIFY_ECH_PROD_CHANGES,
 } from '../actionTypes';
 
 import { notifyChangesAction } from '../actions';
@@ -32,7 +33,16 @@ const showNotification = action$ => action$.pipe(
 
 // TODO: ADD PLOP FOR NEW ENTITIES
 const notifyChangesToggled = action$ => action$.pipe(
-  ofType(NOTIFY_API_STAGE_CHANGES, NOTIFY_ISSUES_PROD_CHANGES, NOTIFY_MP_PROD_CHANGES, NOTIFY_API_GATEWAY_PROD_CHANGES, NOTIFY_ACL_PROD_CHANGES, NOTIFY_API_PROD_CHANGES, NOTIFY_BILLING_PROD_CHANGES),
+  ofType(
+    NOTIFY_ECH_PROD_CHANGES,
+    NOTIFY_API_STAGE_CHANGES,
+    NOTIFY_ISSUES_PROD_CHANGES,
+    NOTIFY_MP_PROD_CHANGES,
+    NOTIFY_API_GATEWAY_PROD_CHANGES,
+    NOTIFY_ACL_PROD_CHANGES,
+    NOTIFY_API_PROD_CHANGES,
+    NOTIFY_BILLING_PROD_CHANGES,
+  ),
   tap(({ payload }) => {
     const { envKey, serviceKey, notifyChanges } = payload;
     const currentToggles = JSON.parse(window.localStorage.getItem('notification_toggles') || '{}');
@@ -53,7 +63,6 @@ const loadNotificationToggles = action$ => action$.pipe(
       return [...acc, notifyChangesAction(envKey, serviceKey, currentToggles[nextToggleKey])];
     }, []);
   }),
-  tap(console.log),
   concatMap(currentTogglesActions => of(...currentTogglesActions)),
 );
 

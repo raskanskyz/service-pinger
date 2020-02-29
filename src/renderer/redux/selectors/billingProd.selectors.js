@@ -6,3 +6,4 @@ export const notifyBillingProdChangesSelector = createSelector(baseSelector, sta
 export const billingProdStatusSelector = createSelector(baseSelector, state => state.status);
 export const billingProdVersionSelector = createSelector(baseSelector, state => state.version);
 export const billingProdUptimePercentSelector = createSelector(baseSelector, state => state.uptimePercent);
+export const billingProdVersionDeploymentDateSelector = createSelector(baseSelector, state => state.versionDeploymentDate);
