@@ -1,6 +1,10 @@
 import { SERVICE_KEY } from '../consts';
 import {
   // PLOP ACTION IMPORTS PLACEHOLDER
+  GET_INIT_PROD_ROUTER_DATA,
+  SET_INIT_PROD_ROUTER_DATA,
+  SET_ROUTER_PROD_RESPONSE,
+  NOTIFY_ROUTER_PROD_CHANGES,
   GET_INIT_PROD_ECH2_DATA,
   SET_INIT_PROD_ECH2_DATA,
   SET_ECH2_PROD_RESPONSE,
@@ -67,6 +71,8 @@ export const setResponseAction = (env, serviceKey, payload) => {
   const actionMapper = {
     prod: {
       // PLOP SET_RESPONSE PROD PLACEHOLDER
+      [SERVICE_KEY.ROUTER]: SET_ROUTER_PROD_RESPONSE,
+
       [SERVICE_KEY.ECH2]: SET_ECH2_PROD_RESPONSE,
 
       [SERVICE_KEY.SEARCH]: SET_SEARCH_PROD_RESPONSE,
@@ -101,6 +107,8 @@ export const getInitDataAction = (env, serviceKey) => {
   const actionMapper = {
     prod: {
       // PLOP GET_INIT_DATA PROD PLACEHOLDER
+      [SERVICE_KEY.ROUTER]: GET_INIT_PROD_ROUTER_DATA,
+
       [SERVICE_KEY.ECH2]: GET_INIT_PROD_ECH2_DATA,
 
       [SERVICE_KEY.SEARCH]: GET_INIT_PROD_SEARCH_DATA,
@@ -137,6 +145,8 @@ export const setInitDataAction = (env, serviceKey, payload) => {
   const actionMapper = {
     prod: {
       // PLOP SET_INIT_DATA PROD PLACEHOLDER
+      [SERVICE_KEY.ROUTER]: SET_INIT_PROD_ROUTER_DATA,
+
       [SERVICE_KEY.ECH2]: SET_INIT_PROD_ECH2_DATA,
 
       [SERVICE_KEY.SEARCH]: SET_INIT_PROD_SEARCH_DATA,
@@ -171,6 +181,8 @@ export const notifyChangesAction = (envKey, serviceKey, payload) => {
   const actionMapper = {
     prod: {
       // PLOP NOTIFY_CHANGES PROD PLACEHOLDER
+      [SERVICE_KEY.ROUTER]: NOTIFY_ROUTER_PROD_CHANGES,
+
       [SERVICE_KEY.ECH2]: NOTIFY_ECH2_PROD_CHANGES,
 
       [SERVICE_KEY.SEARCH]: NOTIFY_SEARCH_PROD_CHANGES,

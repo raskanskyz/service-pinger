@@ -9,6 +9,10 @@ import { SERVICE_KEY } from '../../consts';
 
 // PLOP PROD LIST IMPORTS
 import {
+  routerProdStatusSelector, routerProdVersionSelector, notifyRouterProdChangesSelector, routerProdUptimePercentSelector, routerProdVersionDeploymentDateSelector,
+} from '../../redux/selectors/routerProd.selectors';
+
+import {
   ech2ProdStatusSelector, ech2ProdVersionSelector, notifyEch2ProdChangesSelector, ech2ProdUptimePercentSelector, ech2ProdVersionDeploymentDateSelector,
 } from '../../redux/selectors/ech2Prod.selectors';
 
@@ -74,6 +78,12 @@ const { Panel } = Collapse;
 
 export default ({ badgeRenderer, onChange }) => {
   // PLOP PROD LIST SELECTORS
+  const routerProdStatus = useSelector(routerProdStatusSelector);
+  const routerProdVersion = useSelector(routerProdVersionSelector);
+  const notifyRouterProdChanges = useSelector(notifyRouterProdChangesSelector);
+  const routerProdUptimePercent = useSelector(routerProdUptimePercentSelector);
+  const routerProdVersionDeploymentDate = useSelector(routerProdVersionDeploymentDateSelector);
+
   const ech2ProdStatus = useSelector(ech2ProdStatusSelector);
   const ech2ProdVersion = useSelector(ech2ProdVersionSelector);
   const notifyEch2ProdChanges = useSelector(notifyEch2ProdChangesSelector);
@@ -137,6 +147,16 @@ export default ({ badgeRenderer, onChange }) => {
   const data = orderBy(
     [
       // PLOP PROD LIST DATA
+    {
+      key: SERVICE_KEY.ROUTER,
+      title: 'Router Service',
+      version: routerProdVersion,
+      status: routerProdStatus,
+      notifyChanges: notifyRouterProdChanges,
+      uptimePercent: routerProdUptimePercent,
+      versionDeploymentDate: routerProdVersionDeploymentDate,
+    },
+
     {
       key: SERVICE_KEY.ECH2,
       title: 'Ech 2 0',
