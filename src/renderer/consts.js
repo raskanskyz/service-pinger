@@ -1,5 +1,6 @@
 export const SERVICE_KEY = {
   // PLOP SERVICE_KEY PLACEHOLDER
+  ECH2: 'ech2',
   SEARCH: 'search',
   PROVISIONING: 'provisioning',
   ECH: 'ech',

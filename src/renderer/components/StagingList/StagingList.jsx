@@ -15,6 +15,7 @@ export default ({ badgeRenderer, onChange }) => {
 
 
 
+
   const apiStageStatus = useSelector(apiStageStatusSelector);
   const apiStageVersion = useSelector(apiStageVersionSelector);
   const notifyApiStageChanges = useSelector(notifyApiStageChangesSelector);

@@ -9,6 +9,10 @@ import { SERVICE_KEY } from '../../consts';
 
 // PLOP PROD LIST IMPORTS
 import {
+  ech2ProdStatusSelector, ech2ProdVersionSelector, notifyEch2ProdChangesSelector, ech2ProdUptimePercentSelector, ech2ProdVersionDeploymentDateSelector,
+} from '../../redux/selectors/ech2Prod.selectors';
+
+import {
   searchProdStatusSelector, searchProdVersionSelector, notifySearchProdChangesSelector, searchProdUptimePercentSelector, searchProdVersionDeploymentDateSelector,
 } from '../../redux/selectors/searchProd.selectors';
 
@@ -70,6 +74,12 @@ const { Panel } = Collapse;
 
 export default ({ badgeRenderer, onChange }) => {
   // PLOP PROD LIST SELECTORS
+  const ech2ProdStatus = useSelector(ech2ProdStatusSelector);
+  const ech2ProdVersion = useSelector(ech2ProdVersionSelector);
+  const notifyEch2ProdChanges = useSelector(notifyEch2ProdChangesSelector);
+  const ech2ProdUptimePercent = useSelector(ech2ProdUptimePercentSelector);
+  const ech2ProdVersionDeploymentDate = useSelector(ech2ProdVersionDeploymentDateSelector);
+
   const searchProdStatus = useSelector(searchProdStatusSelector);
   const searchProdVersion = useSelector(searchProdVersionSelector);
   const notifySearchProdChanges = useSelector(notifySearchProdChangesSelector);
@@ -127,6 +137,16 @@ export default ({ badgeRenderer, onChange }) => {
   const data = orderBy(
     [
       // PLOP PROD LIST DATA
+    {
+      key: SERVICE_KEY.ECH2,
+      title: 'Ech 2 0',
+      version: ech2ProdVersion,
+      status: ech2ProdStatus,
+      notifyChanges: notifyEch2ProdChanges,
+      uptimePercent: ech2ProdUptimePercent,
+      versionDeploymentDate: ech2ProdVersionDeploymentDate,
+    },
+
     {
       key: SERVICE_KEY.SEARCH,
       title: 'Search Service',

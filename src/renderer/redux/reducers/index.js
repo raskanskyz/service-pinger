@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 // PLOP IMPORT REDUCERS PLACEHOLDER
+import ech2Prod from './ech2Prod.reducer';
 import searchProd from './searchProd.reducer';
 import provisioningProd from './provisioningProd.reducer';
 import echProd from './echProd.reducer';
@@ -14,6 +15,7 @@ import apiProd from './apiProd.reducer';
 
 export default combineReducers({
   // PLOP COMBINE_REDUCERS PLACEHOLDER
+  ech2Prod,
   searchProd,
   provisioningProd,
   echProd,
