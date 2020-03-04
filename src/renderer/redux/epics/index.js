@@ -1,6 +1,7 @@
 import { combineEpics } from 'redux-observable';
 
 // PLOP IMPORT EPICS PLACEHOLDER
+import searchProdEpic from './searchProd.epic';
 import provisioningProdEpic from './provisioningProd.epic';
 import echProdEpic from './echProd.epic';
 import billingProdEpic from './billingProd.epic';
@@ -14,6 +15,7 @@ import ui from './ui.epic';
 
 export default combineEpics(
   // PLOP COMBINE_EPICS PLACEHOLDER
+  ...searchProdEpic,
   ...provisioningProdEpic,
   ...echProdEpic,
   ...billingProdEpic,

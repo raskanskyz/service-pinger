@@ -9,6 +9,10 @@ import { SERVICE_KEY } from '../../consts';
 
 // PLOP PROD LIST IMPORTS
 import {
+  searchProdStatusSelector, searchProdVersionSelector, notifySearchProdChangesSelector, searchProdUptimePercentSelector, searchProdVersionDeploymentDateSelector,
+} from '../../redux/selectors/searchProd.selectors';
+
+import {
   provisioningProdStatusSelector, provisioningProdVersionSelector, notifyProvisioningProdChangesSelector, provisioningProdUptimePercentSelector, provisioningProdVersionDeploymentDateSelector,
 } from '../../redux/selectors/provisioningProd.selectors';
 
@@ -66,6 +70,12 @@ const { Panel } = Collapse;
 
 export default ({ badgeRenderer, onChange }) => {
   // PLOP PROD LIST SELECTORS
+  const searchProdStatus = useSelector(searchProdStatusSelector);
+  const searchProdVersion = useSelector(searchProdVersionSelector);
+  const notifySearchProdChanges = useSelector(notifySearchProdChangesSelector);
+  const searchProdUptimePercent = useSelector(searchProdUptimePercentSelector);
+  const searchProdVersionDeploymentDate = useSelector(searchProdVersionDeploymentDateSelector);
+
   const provisioningProdStatus = useSelector(provisioningProdStatusSelector);
   const provisioningProdVersion = useSelector(provisioningProdVersionSelector);
   const notifyProvisioningProdChanges = useSelector(notifyProvisioningProdChangesSelector);
@@ -117,6 +127,16 @@ export default ({ badgeRenderer, onChange }) => {
   const data = orderBy(
     [
       // PLOP PROD LIST DATA
+    {
+      key: SERVICE_KEY.SEARCH,
+      title: 'Search Service',
+      version: searchProdVersion,
+      status: searchProdStatus,
+      notifyChanges: notifySearchProdChanges,
+      uptimePercent: searchProdUptimePercent,
+      versionDeploymentDate: searchProdVersionDeploymentDate,
+    },
+
       {
         key: SERVICE_KEY.PROVISIONING,
         title: 'Provisioning Service',
