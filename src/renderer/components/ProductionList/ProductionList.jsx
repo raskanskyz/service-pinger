@@ -9,6 +9,10 @@ import { SERVICE_KEY } from '../../consts';
 
 // PLOP PROD LIST IMPORTS
 import {
+  provisioningProdStatusSelector, provisioningProdVersionSelector, notifyProvisioningProdChangesSelector, provisioningProdUptimePercentSelector, provisioningProdVersionDeploymentDateSelector,
+} from '../../redux/selectors/provisioningProd.selectors';
+
+import {
   echProdStatusSelector,
   echProdVersionSelector,
   notifyEchProdChangesSelector,
@@ -62,6 +66,12 @@ const { Panel } = Collapse;
 
 export default ({ badgeRenderer, onChange }) => {
   // PLOP PROD LIST SELECTORS
+  const provisioningProdStatus = useSelector(provisioningProdStatusSelector);
+  const provisioningProdVersion = useSelector(provisioningProdVersionSelector);
+  const notifyProvisioningProdChanges = useSelector(notifyProvisioningProdChangesSelector);
+  const provisioningProdUptimePercent = useSelector(provisioningProdUptimePercentSelector);
+  const provisioningProdVersionDeploymentDate = useSelector(provisioningProdVersionDeploymentDateSelector);
+
   const echProdStatus = useSelector(echProdStatusSelector);
   const echProdVersion = useSelector(echProdVersionSelector);
   const notifyEchProdChanges = useSelector(notifyEchProdChangesSelector);
@@ -107,6 +117,15 @@ export default ({ badgeRenderer, onChange }) => {
   const data = orderBy(
     [
       // PLOP PROD LIST DATA
+      {
+        key: SERVICE_KEY.PROVISIONING,
+        title: 'Provisioning Service',
+        version: provisioningProdVersion,
+        status: provisioningProdStatus,
+        notifyChanges: notifyProvisioningProdChanges,
+        uptimePercent: provisioningProdUptimePercent,
+        versionDeploymentDate: provisioningProdVersionDeploymentDate,
+      },
       {
         key: SERVICE_KEY.ECH,
         title: 'Ech',

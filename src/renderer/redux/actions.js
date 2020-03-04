@@ -1,6 +1,10 @@
 import { SERVICE_KEY } from '../consts';
 import {
   // PLOP ACTION IMPORTS PLACEHOLDER
+  GET_INIT_PROD_PROVISIONING_DATA,
+  SET_INIT_PROD_PROVISIONING_DATA,
+  SET_PROVISIONING_PROD_RESPONSE,
+  NOTIFY_PROVISIONING_PROD_CHANGES,
   GET_INIT_PROD_ECH_DATA,
   SET_INIT_PROD_ECH_DATA,
   SET_ECH_PROD_RESPONSE,
@@ -55,6 +59,8 @@ export const setResponseAction = (env, serviceKey, payload) => {
   const actionMapper = {
     prod: {
       // PLOP SET_RESPONSE PROD PLACEHOLDER
+      [SERVICE_KEY.PROVISIONING]: SET_PROVISIONING_PROD_RESPONSE,
+
       [SERVICE_KEY.ECH]: SET_ECH_PROD_RESPONSE,
 
       [SERVICE_KEY.BILLING]: SET_BILLING_PROD_RESPONSE,
@@ -83,6 +89,8 @@ export const getInitDataAction = (env, serviceKey) => {
   const actionMapper = {
     prod: {
       // PLOP GET_INIT_DATA PROD PLACEHOLDER
+      [SERVICE_KEY.PROVISIONING]: GET_INIT_PROD_PROVISIONING_DATA,
+
       [SERVICE_KEY.ECH]: GET_INIT_PROD_ECH_DATA,
 
       [SERVICE_KEY.BILLING]: GET_INIT_PROD_BILLING_DATA,
@@ -113,6 +121,8 @@ export const setInitDataAction = (env, serviceKey, payload) => {
   const actionMapper = {
     prod: {
       // PLOP SET_INIT_DATA PROD PLACEHOLDER
+      [SERVICE_KEY.PROVISIONING]: SET_INIT_PROD_PROVISIONING_DATA,
+
       [SERVICE_KEY.ECH]: SET_INIT_PROD_ECH_DATA,
 
       [SERVICE_KEY.BILLING]: SET_INIT_PROD_BILLING_DATA,
@@ -141,6 +151,8 @@ export const notifyChangesAction = (envKey, serviceKey, payload) => {
   const actionMapper = {
     prod: {
       // PLOP NOTIFY_CHANGES PROD PLACEHOLDER
+      [SERVICE_KEY.PROVISIONING]: NOTIFY_PROVISIONING_PROD_CHANGES,
+
       [SERVICE_KEY.ECH]: NOTIFY_ECH_PROD_CHANGES,
 
       [SERVICE_KEY.BILLING]: NOTIFY_BILLING_PROD_CHANGES,
