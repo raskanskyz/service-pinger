@@ -1,14 +1,22 @@
 import { SERVICE_KEY } from '../consts';
 import {
   // PLOP ACTION IMPORTS PLACEHOLDER
-  GET_INIT_PROD_ROUTER_DATA,
-  SET_INIT_PROD_ROUTER_DATA,
-  SET_ROUTER_PROD_RESPONSE,
-  NOTIFY_ROUTER_PROD_CHANGES,
   GET_INIT_PROD_ECH2_DATA,
   SET_INIT_PROD_ECH2_DATA,
   SET_ECH2_PROD_RESPONSE,
   NOTIFY_ECH2_PROD_CHANGES,
+  GET_INIT_STAGE_ECH2_DATA,
+  SET_INIT_STAGE_ECH2_DATA,
+  SET_ECH2_STAGE_RESPONSE,
+  NOTIFY_ECH2_STAGE_CHANGES,
+  GET_INIT_STAGE_ACL_DATA,
+  SET_INIT_STAGE_ACL_DATA,
+  SET_ACL_STAGE_RESPONSE,
+  NOTIFY_ACL_STAGE_CHANGES,
+  GET_INIT_PROD_ROUTER_DATA,
+  SET_INIT_PROD_ROUTER_DATA,
+  SET_ROUTER_PROD_RESPONSE,
+  NOTIFY_ROUTER_PROD_CHANGES,
   GET_INIT_PROD_SEARCH_DATA,
   SET_INIT_PROD_SEARCH_DATA,
   SET_SEARCH_PROD_RESPONSE,
@@ -71,6 +79,8 @@ export const setResponseAction = (env, serviceKey, payload) => {
   const actionMapper = {
     prod: {
       // PLOP SET_RESPONSE PROD PLACEHOLDER
+      [SERVICE_KEY.ECH2]: SET_ECH2_PROD_RESPONSE,
+
       [SERVICE_KEY.ROUTER]: SET_ROUTER_PROD_RESPONSE,
 
       [SERVICE_KEY.ECH2]: SET_ECH2_PROD_RESPONSE,
@@ -92,6 +102,10 @@ export const setResponseAction = (env, serviceKey, payload) => {
     },
     stage: {
       // PLOP SET_RESPONSE STAGE PLACEHOLDER
+      [SERVICE_KEY.ECH2]: SET_ECH2_STAGE_RESPONSE,
+
+      [SERVICE_KEY.ACL]: SET_ACL_STAGE_RESPONSE,
+
       [SERVICE_KEY.API]: SET_API_STAGE_RESPONSE,
 
     },
@@ -107,6 +121,8 @@ export const getInitDataAction = (env, serviceKey) => {
   const actionMapper = {
     prod: {
       // PLOP GET_INIT_DATA PROD PLACEHOLDER
+      [SERVICE_KEY.ECH2]: GET_INIT_PROD_ECH2_DATA,
+
       [SERVICE_KEY.ROUTER]: GET_INIT_PROD_ROUTER_DATA,
 
       [SERVICE_KEY.ECH2]: GET_INIT_PROD_ECH2_DATA,
@@ -128,6 +144,10 @@ export const getInitDataAction = (env, serviceKey) => {
     },
     stage: {
       // PLOP GET_INIT_DATA STAGE PLACEHOLDER
+      [SERVICE_KEY.ECH2]: GET_INIT_STAGE_ECH2_DATA,
+
+      [SERVICE_KEY.ACL]: GET_INIT_STAGE_ACL_DATA,
+
       [SERVICE_KEY.API]: GET_INIT_STAGE_API_DATA,
 
     },
@@ -145,6 +165,8 @@ export const setInitDataAction = (env, serviceKey, payload) => {
   const actionMapper = {
     prod: {
       // PLOP SET_INIT_DATA PROD PLACEHOLDER
+      [SERVICE_KEY.ECH2]: SET_INIT_PROD_ECH2_DATA,
+
       [SERVICE_KEY.ROUTER]: SET_INIT_PROD_ROUTER_DATA,
 
       [SERVICE_KEY.ECH2]: SET_INIT_PROD_ECH2_DATA,
@@ -166,6 +188,10 @@ export const setInitDataAction = (env, serviceKey, payload) => {
     },
     stage: {
       // PLOP SET_INIT_DATA STAGE PLACEHOLDER
+      [SERVICE_KEY.ECH2]: SET_INIT_STAGE_ECH2_DATA,
+
+      [SERVICE_KEY.ACL]: SET_INIT_STAGE_ACL_DATA,
+
       [SERVICE_KEY.API]: SET_INIT_STAGE_API_DATA,
 
     },
@@ -181,6 +207,8 @@ export const notifyChangesAction = (envKey, serviceKey, payload) => {
   const actionMapper = {
     prod: {
       // PLOP NOTIFY_CHANGES PROD PLACEHOLDER
+      [SERVICE_KEY.ECH2]: NOTIFY_ECH2_PROD_CHANGES,
+
       [SERVICE_KEY.ROUTER]: NOTIFY_ROUTER_PROD_CHANGES,
 
       [SERVICE_KEY.ECH2]: NOTIFY_ECH2_PROD_CHANGES,
@@ -202,6 +230,10 @@ export const notifyChangesAction = (envKey, serviceKey, payload) => {
     },
     stage: {
       // PLOP NOTIFY_CHANGES STAGE PLACEHOLDER
+      [SERVICE_KEY.ECH2]: NOTIFY_ECH2_STAGE_CHANGES,
+
+      [SERVICE_KEY.ACL]: NOTIFY_ACL_STAGE_CHANGES,
+
       [SERVICE_KEY.API]: NOTIFY_API_STAGE_CHANGES,
 
     },

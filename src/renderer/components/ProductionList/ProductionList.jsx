@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import {
-  orderBy, map,
+  orderBy,
 } from 'lodash-es';
-import { Switch, Collapse } from 'antd';
+import { List } from 'antd';
 
 import { SERVICE_KEY } from '../../consts';
+import ListItem from '../ListItem/ListItem';
 
 // PLOP PROD LIST IMPORTS
 import {
@@ -74,10 +75,10 @@ import {
   apiProdVersionDeploymentDateSelector,
 } from '../../redux/selectors/apiProd.selectors';
 
-const { Panel } = Collapse;
-
 export default ({ badgeRenderer, onChange }) => {
   // PLOP PROD LIST SELECTORS
+
+
   const routerProdStatus = useSelector(routerProdStatusSelector);
   const routerProdVersion = useSelector(routerProdVersionSelector);
   const notifyRouterProdChanges = useSelector(notifyRouterProdChangesSelector);
@@ -147,35 +148,35 @@ export default ({ badgeRenderer, onChange }) => {
   const data = orderBy(
     [
       // PLOP PROD LIST DATA
-    {
-      key: SERVICE_KEY.ROUTER,
-      title: 'Router Service',
-      version: routerProdVersion,
-      status: routerProdStatus,
-      notifyChanges: notifyRouterProdChanges,
-      uptimePercent: routerProdUptimePercent,
-      versionDeploymentDate: routerProdVersionDeploymentDate,
-    },
+      {
+        key: SERVICE_KEY.ROUTER,
+        title: 'Router Service',
+        version: routerProdVersion,
+        status: routerProdStatus,
+        notifyChanges: notifyRouterProdChanges,
+        uptimePercent: routerProdUptimePercent,
+        versionDeploymentDate: routerProdVersionDeploymentDate,
+      },
 
-    {
-      key: SERVICE_KEY.ECH2,
-      title: 'Ech 2 0',
-      version: ech2ProdVersion,
-      status: ech2ProdStatus,
-      notifyChanges: notifyEch2ProdChanges,
-      uptimePercent: ech2ProdUptimePercent,
-      versionDeploymentDate: ech2ProdVersionDeploymentDate,
-    },
+      {
+        key: SERVICE_KEY.ECH2,
+        title: 'Ech 2 0',
+        version: ech2ProdVersion,
+        status: ech2ProdStatus,
+        notifyChanges: notifyEch2ProdChanges,
+        uptimePercent: ech2ProdUptimePercent,
+        versionDeploymentDate: ech2ProdVersionDeploymentDate,
+      },
 
-    {
-      key: SERVICE_KEY.SEARCH,
-      title: 'Search Service',
-      version: searchProdVersion,
-      status: searchProdStatus,
-      notifyChanges: notifySearchProdChanges,
-      uptimePercent: searchProdUptimePercent,
-      versionDeploymentDate: searchProdVersionDeploymentDate,
-    },
+      {
+        key: SERVICE_KEY.SEARCH,
+        title: 'Search Service',
+        version: searchProdVersion,
+        status: searchProdStatus,
+        notifyChanges: notifySearchProdChanges,
+        uptimePercent: searchProdUptimePercent,
+        versionDeploymentDate: searchProdVersionDeploymentDate,
+      },
 
       {
         key: SERVICE_KEY.PROVISIONING,
@@ -257,49 +258,13 @@ export default ({ badgeRenderer, onChange }) => {
     ['asc', 'asc'],
   );
 
-  const itemRenderer = item => (
-    <Panel
-      key={item.key}
-      style={{ cursor: 'pointer' }}
-      header={(
-        <div
-          style={{
-            cursor: 'pointer',
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div>
-            <span style={{ cursor: 'pointer' }}>
-              {badgeRenderer(item.status)}
-              {item.title}
-            </span>
-          </div>
-          <Switch
-            checked={item.notifyChanges}
-            size="small"
-            onChange={(checked, event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              onChange(checked, 'prod', item);
-            }}
-          />
-        </div>
-      )}
-    >
-      <div>
-        <div>{`version: ${item.version}`}</div>
-        <div>{`deployment date: ${item.versionDeploymentDate}`}</div>
-        <div>{`uptime: ${item.uptimePercent}%`}</div>
-      </div>
-    </Panel>
-  );
-
   return (
-    <Collapse bordered={false}>
-      {map(data, itemRenderer)}
-    </Collapse>
+    <List
+      itemLayout="horizontal"
+      dataSource={data}
+      renderItem={item => (
+        <ListItem item={item} onChange={onChange} env="prod" />
+      )}
+    />
   );
 };
