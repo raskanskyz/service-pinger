@@ -18,10 +18,14 @@ let socket;
 const establishConnection = action$ => action$.pipe(
   ofType(ESTABLISH_CONNECTION),
   switchMap(() => {
-    socket = io('http://localhost:3000', { transports: ['websocket'] });
+    console.log('###########RapidLogs: process.env.SERVER_ADDRESS', process.env.SERVER_ADDRESS);
+    socket = io(process.env.SERVER_ADDRESS, { transports: ['websocket'], path: '/version-tracker/socket.io' });
     return fromEvent(socket, 'connect');
   }),
-  switchMap(() => [getInitDataAction('prod', SERVICE_KEY.MARKETPLACE)]),
+  switchMap(() => {
+    console.log('###########RapidLogs: CONNECTION OK');
+    return [getInitDataAction('prod', SERVICE_KEY.MARKETPLACE)];
+  }),
 );
 
 const closeConnection = action$ => action$.pipe(

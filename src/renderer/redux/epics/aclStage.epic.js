@@ -9,14 +9,16 @@ import {
   ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_STAGE_ACL_DATA, SET_INIT_STAGE_ACL_DATA,
 } from '../actionTypes';
 import { notifyAclStageChangesSelector, aclStageStatusSelector } from '../selectors/aclStage.selectors';
-import { getInitDataAction, setResponseAction, setInitDataAction, showNotificationAction } from '../actions';
+import {
+  getInitDataAction, setResponseAction, setInitDataAction, showNotificationAction,
+} from '../actions';
 import { SERVICE_KEY } from '../../consts';
 
 let socket;
 const establishConnection = action$ => action$.pipe(
   ofType(ESTABLISH_CONNECTION),
   switchMap(() => {
-    socket = io('http://localhost:3000', { transports: ['websocket'] });
+    socket = io(process.env.SERVER_ADDRESS, { transports: ['websocket'], path: '/version-tracker/socket.io' });
     return fromEvent(socket, 'connect');
   }),
   switchMap(() => [getInitDataAction('stage', SERVICE_KEY.ACL)]),
@@ -42,11 +44,11 @@ const startAclStageListen = (action$, state$) => action$.pipe(
       return of(
         showNotificationAction({ status: message.status, serviceName: 'Acl Service', downtimeDuration: message.downtimeDuration }),
         setResponseAction('stage', SERVICE_KEY.ACL, message),
-      )
+      );
     }
 
     return of(setResponseAction('stage', SERVICE_KEY.ACL, message));
-  })
+  }),
 );
 
 export default [getInitStageAclData, establishConnection, closeConnection, startAclStageListen];

@@ -9,14 +9,16 @@ import {
   ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_STAGE_ECH2_DATA, SET_INIT_STAGE_ECH2_DATA,
 } from '../actionTypes';
 import { notifyEch2StageChangesSelector, ech2StageStatusSelector } from '../selectors/ech2Stage.selectors';
-import { getInitDataAction, setResponseAction, setInitDataAction, showNotificationAction } from '../actions';
+import {
+  getInitDataAction, setResponseAction, setInitDataAction, showNotificationAction,
+} from '../actions';
 import { SERVICE_KEY } from '../../consts';
 
 let socket;
 const establishConnection = action$ => action$.pipe(
   ofType(ESTABLISH_CONNECTION),
   switchMap(() => {
-    socket = io('http://localhost:3000', { transports: ['websocket'] });
+    socket = io(process.env.SERVER_ADDRESS, { transports: ['websocket'], path: '/version-tracker/socket.io' });
     return fromEvent(socket, 'connect');
   }),
   switchMap(() => [getInitDataAction('stage', SERVICE_KEY.ECH2)]),
@@ -42,11 +44,11 @@ const startEch2StageListen = (action$, state$) => action$.pipe(
       return of(
         showNotificationAction({ status: message.status, serviceName: 'Ech2 0', downtimeDuration: message.downtimeDuration }),
         setResponseAction('stage', SERVICE_KEY.ECH2, message),
-      )
+      );
     }
 
     return of(setResponseAction('stage', SERVICE_KEY.ECH2, message));
-  })
+  }),
 );
 
 export default [getInitStageEch2Data, establishConnection, closeConnection, startEch2StageListen];

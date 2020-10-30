@@ -18,7 +18,7 @@ let socket;
 const establishConnection = action$ => action$.pipe(
   ofType(ESTABLISH_CONNECTION),
   switchMap(() => {
-    socket = io('http://localhost:3000', { transports: ['websocket'] });
+    socket = io(process.env.SERVER_ADDRESS, { transports: ['websocket'], path: '/version-tracker/socket.io' });
     return fromEvent(socket, 'connect');
   }),
   switchMap(() => [getInitDataAction('stage', SERVICE_KEY.API)]),
