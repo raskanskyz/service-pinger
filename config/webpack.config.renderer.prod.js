@@ -1,9 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const merge = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
+
 const baseConfig = require('./webpack.config.base');
 
 module.exports = merge.smart(baseConfig, {
@@ -43,13 +44,11 @@ module.exports = merge.smart(baseConfig, {
 
   optimization: {
     minimizer: [
-      new UglifyJSPlugin({
-        uglifyOptions: {
-          mangle: false,
-          keep_classnames: true,
-          keep_fnames: true,
+      new TerserPlugin({
+        parallel: true,
+        terserOptions: {
+          ecma: 6,
         },
-        sourceMap: true,
       }),
       new OptimizeCSSAssetsPlugin(),
     ],

@@ -36,6 +36,7 @@ module.exports = merge.smart(baseConfig, {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
+      SERVER_ADDRESS: 'ec2-54-157-41-28.compute-1.amazonaws.com:8766',
     }),
   ],
 

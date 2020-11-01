@@ -9,7 +9,6 @@ import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electro
 let mb;
 
 const installExtensions = async () => {
-  console.log('TCL: installExtensions -> process.env.NODE_ENV', process.env.NODE_ENV);
   if (process.env.NODE_ENV === 'development') {
     const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
 
@@ -33,7 +32,7 @@ app.on('ready', async () => {
         slashes: true,
       }),
     icon: path.resolve(__dirname, 'rapidapi.png'),
-    tooltip: 'RapidPing',
+    tooltip: 'Rapid Version Tracker',
     width: 350,
     height: 460,
     fullscreenable: false,
