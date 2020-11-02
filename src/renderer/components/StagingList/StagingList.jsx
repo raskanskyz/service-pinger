@@ -9,6 +9,10 @@ import ListItem from '../ListItem/ListItem';
 
 // PLOP STAGE LIST IMPORTS
 import {
+  issuesStageStatusSelector, issuesStageVersionSelector, notifyIssuesStageChangesSelector, issuesStageUptimePercentSelector, issuesStageVersionDeploymentDateSelector,
+} from '../../redux/selectors/issuesStage.selectors';
+
+import {
   ech2StageStatusSelector, ech2StageVersionSelector, notifyEch2StageChangesSelector, ech2StageUptimePercentSelector, ech2StageVersionDeploymentDateSelector,
 } from '../../redux/selectors/ech2Stage.selectors';
 
@@ -22,6 +26,12 @@ import {
 
 export default ({ onChange }) => {
   // PLOP STAGE LIST SELECTORS
+  const issuesStageStatus = useSelector(issuesStageStatusSelector);
+  const issuesStageVersion = useSelector(issuesStageVersionSelector);
+  const notifyIssuesStageChanges = useSelector(notifyIssuesStageChangesSelector);
+  const issuesStageUptimePercent = useSelector(issuesStageUptimePercentSelector);
+  const issuesStageVersionDeploymentDate = useSelector(issuesStageVersionDeploymentDateSelector);
+
   const ech2StageStatus = useSelector(ech2StageStatusSelector);
   const ech2StageVersion = useSelector(ech2StageVersionSelector);
   const notifyEch2StageChanges = useSelector(notifyEch2StageChangesSelector);
@@ -44,6 +54,16 @@ export default ({ onChange }) => {
   const data = orderBy(
     [
       // PLOP STAGE LIST DATA
+      {
+        key: SERVICE_KEY.ISSUES,
+        title: 'Issues Service',
+        version: issuesStageVersion,
+        status: issuesStageStatus,
+        notifyChanges: notifyIssuesStageChanges,
+        uptimePercent: issuesStageUptimePercent,
+        versionDeploymentDate: issuesStageVersionDeploymentDate,
+      },
+
       {
         key: SERVICE_KEY.ECH2,
         title: 'Ech2 0',
