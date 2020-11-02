@@ -1,6 +1,10 @@
 import { SERVICE_KEY } from '../consts';
 import {
   // PLOP ACTION IMPORTS PLACEHOLDER
+  GET_INIT_STAGE_ACL_V2_DATA,
+  SET_INIT_STAGE_ACL_V2_DATA,
+  SET_ACL_V2_STAGE_RESPONSE,
+  NOTIFY_ACL_V2_STAGE_CHANGES,
   GET_INIT_STAGE_ISSUES_DATA,
   SET_INIT_STAGE_ISSUES_DATA,
   SET_ISSUES_STAGE_RESPONSE,
@@ -106,6 +110,8 @@ export const setResponseAction = (env, serviceKey, payload) => {
     },
     stage: {
       // PLOP SET_RESPONSE STAGE PLACEHOLDER
+      [SERVICE_KEY.ACL_V2]: SET_ACL_V2_STAGE_RESPONSE,
+
       [SERVICE_KEY.ISSUES]: SET_ISSUES_STAGE_RESPONSE,
 
       [SERVICE_KEY.ECH2]: SET_ECH2_STAGE_RESPONSE,
@@ -150,6 +156,8 @@ export const getInitDataAction = (env, serviceKey) => {
     },
     stage: {
       // PLOP GET_INIT_DATA STAGE PLACEHOLDER
+      [SERVICE_KEY.ACL_V2]: GET_INIT_STAGE_ACL_V2_DATA,
+
       [SERVICE_KEY.ISSUES]: GET_INIT_STAGE_ISSUES_DATA,
 
       [SERVICE_KEY.ECH2]: GET_INIT_STAGE_ECH2_DATA,
@@ -196,6 +204,8 @@ export const setInitDataAction = (env, serviceKey, payload) => {
     },
     stage: {
       // PLOP SET_INIT_DATA STAGE PLACEHOLDER
+      [SERVICE_KEY.ACL_V2]: SET_INIT_STAGE_ACL_V2_DATA,
+
       [SERVICE_KEY.ISSUES]: SET_INIT_STAGE_ISSUES_DATA,
 
       [SERVICE_KEY.ECH2]: SET_INIT_STAGE_ECH2_DATA,
@@ -240,6 +250,8 @@ export const notifyChangesAction = (envKey, serviceKey, payload) => {
     },
     stage: {
       // PLOP NOTIFY_CHANGES STAGE PLACEHOLDER
+      [SERVICE_KEY.ACL_V2]: NOTIFY_ACL_V2_STAGE_CHANGES,
+
       [SERVICE_KEY.ISSUES]: NOTIFY_ISSUES_STAGE_CHANGES,
 
       [SERVICE_KEY.ECH2]: NOTIFY_ECH2_STAGE_CHANGES,

@@ -9,6 +9,10 @@ import ListItem from '../ListItem/ListItem';
 
 // PLOP STAGE LIST IMPORTS
 import {
+  aclV2StageStatusSelector, aclV2StageVersionSelector, notifyAclV2StageChangesSelector, aclV2StageUptimePercentSelector, aclV2StageVersionDeploymentDateSelector,
+} from '../../redux/selectors/aclV2Stage.selectors';
+
+import {
   issuesStageStatusSelector, issuesStageVersionSelector, notifyIssuesStageChangesSelector, issuesStageUptimePercentSelector, issuesStageVersionDeploymentDateSelector,
 } from '../../redux/selectors/issuesStage.selectors';
 
@@ -26,6 +30,12 @@ import {
 
 export default ({ onChange }) => {
   // PLOP STAGE LIST SELECTORS
+  const aclV2StageStatus = useSelector(aclV2StageStatusSelector);
+  const aclV2StageVersion = useSelector(aclV2StageVersionSelector);
+  const notifyAclV2StageChanges = useSelector(notifyAclV2StageChangesSelector);
+  const aclV2StageUptimePercent = useSelector(aclV2StageUptimePercentSelector);
+  const aclV2StageVersionDeploymentDate = useSelector(aclV2StageVersionDeploymentDateSelector);
+
   const issuesStageStatus = useSelector(issuesStageStatusSelector);
   const issuesStageVersion = useSelector(issuesStageVersionSelector);
   const notifyIssuesStageChanges = useSelector(notifyIssuesStageChangesSelector);
@@ -54,6 +64,16 @@ export default ({ onChange }) => {
   const data = orderBy(
     [
       // PLOP STAGE LIST DATA
+    {
+      key: SERVICE_KEY.ACL_V2,
+      title: 'Acl V2',
+      version: aclV2StageVersion,
+      status: aclV2StageStatus,
+      notifyChanges: notifyAclV2StageChanges,
+      uptimePercent: aclV2StageUptimePercent,
+      versionDeploymentDate: aclV2StageVersionDeploymentDate,
+    },
+
       {
         key: SERVICE_KEY.ISSUES,
         title: 'Issues Service',
