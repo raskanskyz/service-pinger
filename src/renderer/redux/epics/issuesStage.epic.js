@@ -9,14 +9,16 @@ import {
   ESTABLISH_CONNECTION, CLOSE_CONNECTION, GET_INIT_STAGE_ISSUES_DATA, SET_INIT_STAGE_ISSUES_DATA,
 } from '../actionTypes';
 import { notifyIssuesStageChangesSelector, issuesStageStatusSelector } from '../selectors/issuesStage.selectors';
-import { getInitDataAction, setResponseAction, setInitDataAction, showNotificationAction } from '../actions';
+import {
+  getInitDataAction, setResponseAction, setInitDataAction, showNotificationAction,
+} from '../actions';
 import { SERVICE_KEY } from '../../consts';
 
 let socket;
 const establishConnection = action$ => action$.pipe(
   ofType(ESTABLISH_CONNECTION),
   switchMap(() => {
-    socket = io(process.env.SERVER_ADDRESS, { transports: ['websocket'], path: '/version-tracker/socket.io' });
+    socket = io(`ws://${process.env.SERVER_ADDRESS}`, { transports: ['websocket'], path: '/version-tracker/socket.io' });
     return fromEvent(socket, 'connect');
   }),
   switchMap(() => [getInitDataAction('stage', SERVICE_KEY.ISSUES)]),
@@ -42,11 +44,11 @@ const startIssuesStageListen = (action$, state$) => action$.pipe(
       return of(
         showNotificationAction({ status: message.status, serviceName: 'Issues Service', downtimeDuration: message.downtimeDuration }),
         setResponseAction('stage', SERVICE_KEY.ISSUES, message),
-      )
+      );
     }
 
     return of(setResponseAction('stage', SERVICE_KEY.ISSUES, message));
-  })
+  }),
 );
 
 export default [getInitStageIssuesData, establishConnection, closeConnection, startIssuesStageListen];

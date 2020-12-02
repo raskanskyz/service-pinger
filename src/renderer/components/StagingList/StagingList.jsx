@@ -64,15 +64,15 @@ export default ({ onChange }) => {
   const data = orderBy(
     [
       // PLOP STAGE LIST DATA
-    {
-      key: SERVICE_KEY.ACL_V2,
-      title: 'Acl V2',
-      version: aclV2StageVersion,
-      status: aclV2StageStatus,
-      notifyChanges: notifyAclV2StageChanges,
-      uptimePercent: aclV2StageUptimePercent,
-      versionDeploymentDate: aclV2StageVersionDeploymentDate,
-    },
+      {
+        key: SERVICE_KEY.ACL_V2,
+        title: 'Acl V2',
+        version: aclV2StageVersion,
+        status: aclV2StageStatus,
+        notifyChanges: notifyAclV2StageChanges,
+        uptimePercent: aclV2StageUptimePercent,
+        versionDeploymentDate: aclV2StageVersionDeploymentDate,
+      },
 
       {
         key: SERVICE_KEY.ISSUES,
@@ -114,8 +114,8 @@ export default ({ onChange }) => {
       },
 
     ],
-    ['status', 'title'],
-    ['asc', 'asc'],
+    ['title'],
+    ['asc'],
   );
 
   return (

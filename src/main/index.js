@@ -40,6 +40,11 @@ app.on('ready', async () => {
     transparent: true,
     webPreferences: {
       backgroundThrottling: false,
+      // plugins: true,
+      // nodeIntegration: false,
+      // webSecurity: false,
+      // allowDisplayingInsecureContent: true,
+      // allowRunningInsecureContent: true,
     },
     alwaysOnTop: true,
     showOnAllWorkspaces: false,
@@ -47,7 +52,9 @@ app.on('ready', async () => {
   });
 
   mb.on('after-create-window', () => {
-    mb.window.webContents.openDevTools({ mode: 'undocked' });
+    if (process.env.NODE_ENV === 'development') {
+      mb.window.webContents.openDevTools({ mode: 'undocked' });
+    }
   });
 });
 

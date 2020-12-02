@@ -21,7 +21,7 @@ module.exports = (plop) => {
       {
         type: 'input',
         name: 'serviceKey',
-        message: 'what is the service\'s key? (e.g acl, ech, issues, org, etc.)',
+        message: 'what is the service\'s key? (e.g acl, ech, issues, etc.)',
         validate: (value) => {
           if (/.+/.test(value)) {
             return true;
@@ -32,7 +32,7 @@ module.exports = (plop) => {
       {
         type: 'input',
         name: 'serviceName',
-        message: 'what is the service\'s name? (e.g Organization Dashboard, Acl Service, Issues Service, etc.)',
+        message: 'what is the service\'s name? (e.g Acl Service, Issues Service, etc.)',
         validate: (value) => {
           if (/.+/.test(value)) {
             return true;

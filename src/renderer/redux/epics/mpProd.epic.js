@@ -19,7 +19,7 @@ const establishConnection = action$ => action$.pipe(
   ofType(ESTABLISH_CONNECTION),
   switchMap(() => {
     console.log('###########RapidLogs: process.env.SERVER_ADDRESS', process.env.SERVER_ADDRESS);
-    socket = io(process.env.SERVER_ADDRESS, { transports: ['websocket'], path: '/version-tracker/socket.io' });
+    socket = io(`ws://${process.env.SERVER_ADDRESS}`, { transports: ['websocket'], path: '/version-tracker/socket.io' });
     return fromEvent(socket, 'connect');
   }),
   switchMap(() => {

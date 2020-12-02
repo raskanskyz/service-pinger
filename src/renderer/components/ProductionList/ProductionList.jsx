@@ -254,8 +254,8 @@ export default ({ badgeRenderer, onChange }) => {
         versionDeploymentDate: apiProdVersionDeploymentDate,
       },
     ],
-    ['status', 'title'],
-    ['asc', 'asc'],
+    ['title'],
+    ['asc'],
   );
 
   return (
