@@ -10,6 +10,10 @@ import ListItem from '../ListItem/ListItem';
 
 // PLOP PROD LIST IMPORTS
 import {
+  aclServiceProdStatusSelector, aclServiceProdVersionSelector, notifyAclServiceProdChangesSelector, aclServiceProdUptimePercentSelector, aclServiceProdVersionDeploymentDateSelector,
+} from '../../redux/selectors/aclServiceProd.selectors';
+
+import {
   routerProdStatusSelector, routerProdVersionSelector, notifyRouterProdChangesSelector, routerProdUptimePercentSelector, routerProdVersionDeploymentDateSelector,
 } from '../../redux/selectors/routerProd.selectors';
 
@@ -70,6 +74,13 @@ import {
 
 export default ({ badgeRenderer, onChange }) => {
   // PLOP PROD LIST SELECTORS
+  const aclServiceProdStatus = useSelector(aclServiceProdStatusSelector);
+  const aclServiceProdVersion = useSelector(aclServiceProdVersionSelector);
+  const notifyAclServiceProdChanges = useSelector(notifyAclServiceProdChangesSelector);
+  const aclServiceProdUptimePercent = useSelector(aclServiceProdUptimePercentSelector);
+  const aclServiceProdVersionDeploymentDate = useSelector(aclServiceProdVersionDeploymentDateSelector);
+
+
 
 
   const routerProdStatus = useSelector(routerProdStatusSelector);
@@ -135,6 +146,16 @@ export default ({ badgeRenderer, onChange }) => {
   const data = orderBy(
     [
       // PLOP PROD LIST DATA
+    {
+      key: SERVICE_KEY.ACL_SERVICE,
+      title: 'Acl Service',
+      version: aclServiceProdVersion,
+      status: aclServiceProdStatus,
+      notifyChanges: notifyAclServiceProdChanges,
+      uptimePercent: aclServiceProdUptimePercent,
+      versionDeploymentDate: aclServiceProdVersionDeploymentDate,
+    },
+
       {
         key: SERVICE_KEY.ROUTER,
         title: 'Router Service',

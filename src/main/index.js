@@ -46,7 +46,7 @@ app.on('ready', async () => {
       // allowDisplayingInsecureContent: true,
       // allowRunningInsecureContent: true,
     },
-    alwaysOnTop: true,
+    // alwaysOnTop: true,
     showOnAllWorkspaces: false,
     // preloadWindow: true,
   });

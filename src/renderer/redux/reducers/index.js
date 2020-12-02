@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 
 // PLOP IMPORT REDUCERS PLACEHOLDER
+import aclServiceProd from './aclServiceProd.reducer';
+import aclServiceStage from './aclServiceStage.reducer';
 import provisioningStage from './provisioningStage.reducer';
 import aclV2Stage from './aclV2Stage.reducer';
 import issuesStage from './issuesStage.reducer';
@@ -19,6 +21,8 @@ import apiProd from './apiProd.reducer';
 
 export default combineReducers({
   // PLOP COMBINE_REDUCERS PLACEHOLDER
+  aclServiceProd,
+  aclServiceStage,
   provisioningStage,
   aclV2Stage,
   issuesStage,
