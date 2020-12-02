@@ -5,7 +5,6 @@ import provisioningStage from './provisioningStage.reducer';
 import aclV2Stage from './aclV2Stage.reducer';
 import issuesStage from './issuesStage.reducer';
 import ech2Stage from './ech2Stage.reducer';
-import aclStage from './aclStage.reducer';
 import routerProd from './routerProd.reducer';
 import ech2Prod from './ech2Prod.reducer';
 import searchProd from './searchProd.reducer';
@@ -16,7 +15,6 @@ import apiStage from './apiStage.reducer';
 import issuesProd from './issuesProd.reducer';
 import mpProd from './mpProd.reducer';
 import apiGatewayProd from './apiGatewayProd.reducer';
-import aclProd from './aclProd.reducer';
 import apiProd from './apiProd.reducer';
 
 export default combineReducers({
@@ -25,7 +23,6 @@ export default combineReducers({
   aclV2Stage,
   issuesStage,
   ech2Stage,
-  aclStage,
   routerProd,
   ech2Prod,
   searchProd,
@@ -36,6 +33,5 @@ export default combineReducers({
   issuesProd,
   mpProd,
   apiGatewayProd,
-  aclProd,
   apiProd,
 });

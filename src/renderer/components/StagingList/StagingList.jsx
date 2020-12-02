@@ -25,10 +25,6 @@ import {
 } from '../../redux/selectors/ech2Stage.selectors';
 
 import {
-  aclStageStatusSelector, aclStageVersionSelector, notifyAclStageChangesSelector, aclStageUptimePercentSelector, aclStageVersionDeploymentDateSelector,
-} from '../../redux/selectors/aclStage.selectors';
-
-import {
   apiStageStatusSelector, apiStageVersionSelector, notifyApiStageChangesSelector, apiStageUptimePercentSelector,
 } from '../../redux/selectors/apiStage.selectors';
 
@@ -58,13 +54,6 @@ export default ({ onChange }) => {
   const ech2StageUptimePercent = useSelector(ech2StageUptimePercentSelector);
   const ech2StageVersionDeploymentDate = useSelector(ech2StageVersionDeploymentDateSelector);
 
-  const aclStageStatus = useSelector(aclStageStatusSelector);
-  const aclStageVersion = useSelector(aclStageVersionSelector);
-  const notifyAclStageChanges = useSelector(notifyAclStageChangesSelector);
-  const aclStageUptimePercent = useSelector(aclStageUptimePercentSelector);
-  const aclStageVersionDeploymentDate = useSelector(aclStageVersionDeploymentDateSelector);
-
-
   const apiStageStatus = useSelector(apiStageStatusSelector);
   const apiStageVersion = useSelector(apiStageVersionSelector);
   const notifyApiStageChanges = useSelector(notifyApiStageChangesSelector);
@@ -74,15 +63,15 @@ export default ({ onChange }) => {
   const data = orderBy(
     [
       // PLOP STAGE LIST DATA
-    {
-      key: SERVICE_KEY.PROVISIONING,
-      title: 'Provisioning Service',
-      version: provisioningStageVersion,
-      status: provisioningStageStatus,
-      notifyChanges: notifyProvisioningStageChanges,
-      uptimePercent: provisioningStageUptimePercent,
-      versionDeploymentDate: provisioningStageVersionDeploymentDate,
-    },
+      {
+        key: SERVICE_KEY.PROVISIONING,
+        title: 'Provisioning Service',
+        version: provisioningStageVersion,
+        status: provisioningStageStatus,
+        notifyChanges: notifyProvisioningStageChanges,
+        uptimePercent: provisioningStageUptimePercent,
+        versionDeploymentDate: provisioningStageVersionDeploymentDate,
+      },
 
       {
         key: SERVICE_KEY.ACL_V2,
@@ -112,16 +101,6 @@ export default ({ onChange }) => {
         notifyChanges: notifyEch2StageChanges,
         uptimePercent: ech2StageUptimePercent,
         versionDeploymentDate: ech2StageVersionDeploymentDate,
-      },
-
-      {
-        key: SERVICE_KEY.ACL,
-        title: 'Acl Service',
-        version: aclStageVersion,
-        status: aclStageStatus,
-        notifyChanges: notifyAclStageChanges,
-        uptimePercent: aclStageUptimePercent,
-        versionDeploymentDate: aclStageVersionDeploymentDate,
       },
 
       {

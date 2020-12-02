@@ -61,13 +61,6 @@ import {
 } from '../../redux/selectors/apiGatewayProd.selectors';
 
 import {
-  aclProdStatusSelector,
-  aclProdVersionSelector,
-  notifyAclProdChangesSelector,
-  aclProdUptimePercentSelector,
-  aclProdVersionDeploymentDateSelector,
-} from '../../redux/selectors/aclProd.selectors';
-import {
   apiProdStatusSelector,
   apiProdVersionSelector,
   notifyApiProdChangesSelector,
@@ -77,7 +70,6 @@ import {
 
 export default ({ badgeRenderer, onChange }) => {
   // PLOP PROD LIST SELECTORS
-
 
 
   const routerProdStatus = useSelector(routerProdStatusSelector);
@@ -133,12 +125,6 @@ export default ({ badgeRenderer, onChange }) => {
   const notifyApiGatewayProdChanges = useSelector(notifyApiGatewayProdChangesSelector);
   const apiGatewayProdUptimePercent = useSelector(apiGatewayProdUptimePercentSelector);
   const apiGatewayProdVersionDeploymentDate = useSelector(apiGatewayProdVersionDeploymentDateSelector);
-
-  const aclProdStatus = useSelector(aclProdStatusSelector);
-  const aclProdVersion = useSelector(aclProdVersionSelector);
-  const notifyAclProdChanges = useSelector(notifyAclProdChangesSelector);
-  const aclProdUptimePercent = useSelector(aclProdUptimePercentSelector);
-  const aclProdVersionDeploymentDate = useSelector(aclProdVersionDeploymentDateSelector);
 
   const apiProdStatus = useSelector(apiProdStatusSelector);
   const apiProdVersion = useSelector(apiProdVersionSelector);
@@ -235,15 +221,6 @@ export default ({ badgeRenderer, onChange }) => {
         notifyChanges: notifyApiGatewayProdChanges,
         uptimePercent: apiGatewayProdUptimePercent.toFixed(2),
         versionDeploymentDate: apiGatewayProdVersionDeploymentDate,
-      },
-      {
-        key: SERVICE_KEY.ACL,
-        title: 'ACL',
-        version: aclProdVersion,
-        status: aclProdStatus,
-        notifyChanges: notifyAclProdChanges,
-        uptimePercent: aclProdUptimePercent.toFixed(2),
-        versionDeploymentDate: aclProdVersionDeploymentDate,
       },
       {
         key: SERVICE_KEY.API,

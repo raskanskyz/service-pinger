@@ -4,7 +4,6 @@ export const SERVICE_KEY = {
   ACL_V2: 'acl-v2',
   ISSUES: 'issues',
   ECH2: 'ech2',
-  ACL: 'acl',
   ROUTER: 'router',
   SEARCH: 'search',
   ECH: 'ech',

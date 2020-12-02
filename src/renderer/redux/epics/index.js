@@ -5,7 +5,6 @@ import provisioningStageEpic from './provisioningStage.epic';
 import aclV2StageEpic from './aclV2Stage.epic';
 import issuesStageEpic from './issuesStage.epic';
 import ech2StageEpic from './ech2Stage.epic';
-import aclStageEpic from './aclStage.epic';
 import routerProdEpic from './routerProd.epic';
 import ech2ProdEpic from './ech2Prod.epic';
 import searchProdEpic from './searchProd.epic';
@@ -16,7 +15,6 @@ import apiStageEpic from './apiStage.epic';
 import issuesProdEpic from './issuesProd.epic';
 import mpProdEpic from './mpProd.epic';
 import apiGatewayProd from './apiGatewayProd.epic';
-import aclProd from './aclProd.epic';
 import apiProd from './apiProd.epic';
 import ui from './ui.epic';
 
@@ -26,7 +24,6 @@ export default combineEpics(
   ...aclV2StageEpic,
   ...issuesStageEpic,
   ...ech2StageEpic,
-  ...aclStageEpic,
   ...routerProdEpic,
   ...ech2ProdEpic,
   ...searchProdEpic,
@@ -37,7 +34,6 @@ export default combineEpics(
   ...issuesProdEpic,
   ...mpProdEpic,
   ...apiGatewayProd,
-  ...aclProd,
   ...apiProd,
   ...ui,
 );
