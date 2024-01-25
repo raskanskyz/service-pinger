@@ -8,7 +8,7 @@ const epicMiddleware = createEpicMiddleware();
 
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
-  rootReducer, compose(applyMiddleware(epicMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()),
+  rootReducer, compose(applyMiddleware(epicMiddleware)),
 );
 /* eslint-enable */
 
